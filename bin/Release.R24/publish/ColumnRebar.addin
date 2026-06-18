@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>ColumnRebar</Name>
+    <Assembly>ColumnRebar\ColumnRebar.dll</Assembly>
+    <AddInId>E7F4A9C2-7085-4FA1-B019-CD49D3245D93</AddInId>
+    <FullClassName>ColumnRebar.Application</FullClassName>
+    <VendorId>Development</VendorId>
+    <VendorDescription></VendorDescription>
+  </AddIn>
+</RevitAddIns>

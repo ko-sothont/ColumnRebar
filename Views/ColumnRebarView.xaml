@@ -1,0 +1,783 @@
+<Window x:Class="ColumnRebar.Views.ColumnRebarView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="COLUMN REBAR V2.0" Height="750" Width="1050"
+        WindowStartupLocation="CenterScreen" Background="#F8F8F8"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <Style x:Key="CardBox" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#CC3333"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style x:Key="CardHeader" TargetType="Border">
+            <Setter Property="Background" Value="#CC3333"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="CornerRadius" Value="2,2,0,0"/>
+        </Style>
+
+        <Style x:Key="CardHeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="InputRow" TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#CC3333" Padding="15,10">
+            <DockPanel>
+                <TextBlock Text="COLUMN REBAR V2.0" Foreground="White" FontWeight="Bold" FontSize="16" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+            </DockPanel>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="0" Background="White" BorderThickness="0,1,0,0" BorderBrush="#CC3333">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Padding" Value="15,8"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="#CC3333"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Header="HÌNH HỌC &amp; BỐ TRÍ THÉP">
+                <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Style="{StaticResource CardBox}" Margin="0,0,10,0" Grid.Column="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Style="{StaticResource CardHeader}">
+                                <TextBlock Text="TẤT CẢ CỘT" Style="{StaticResource CardHeaderText}"/>
+                            </Border>
+
+                            <Border Grid.Row="1" Background="#F9FAFB" Margin="10">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+
+                                    <ListBox ItemsSource="{Binding ColumnPreviews}" 
+                                    SelectedItem="{Binding SelectedColumnPreview, Mode=TwoWay}"
+                                    HorizontalAlignment="Center" 
+                                    Margin="0,10"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="Padding" Value="0"/>
+                                                <Setter Property="Margin" Value="0,5"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#E5E7EB"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="110"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="130"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0" Text="{Binding DimensionText}" FontSize="10" 
+                                                      Foreground="#333" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                                      TextAlignment="Right" Margin="0,0,10,0"/>
+
+                                                    <Grid Grid.Column="1" VerticalAlignment="Bottom">
+                                                        <Rectangle Width="{Binding UIColumnWidth}" Height="{Binding UIColumnHeight}" Fill="#22C55E" Opacity="0.9"/>
+                                                        <Rectangle Width="100" Height="{Binding UIBeamDepth}" Fill="#16A34A" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
+                                                        <ItemsControl ItemsSource="{Binding StirrupPositions}" Width="{Binding UIColumnWidth}" Height="{Binding UIColumnHeight}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <Canvas/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemContainerStyle>
+                                                                <Style TargetType="ContentPresenter">
+                                                                    <Setter Property="Canvas.Top" Value="{Binding}"/>
+                                                                    <Setter Property="Canvas.Left" Value="0"/>
+                                                                </Style>
+                                                            </ItemsControl.ItemContainerStyle>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Rectangle Width="{Binding DataContext.UIColumnWidth, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                                                      Height="1.5" Fill="#333333" Opacity="0.8"/>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                            <Rectangle Width="2" Height="{Binding UIColumnHeight}" Fill="#800000" Margin="3,0"/>
+                                                            <Rectangle Width="2" Height="{Binding UIColumnHeight}" Fill="#800000" Margin="3,0"/>
+                                                            <Rectangle Width="2" Height="{Binding UIColumnHeight}" Fill="#800000" Margin="3,0"/>
+                                                        </StackPanel>
+
+                                                        <Rectangle Width="120" Height="1" Fill="Black" StrokeDashArray="2,2" 
+                                                          VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+                                                    </Grid>
+
+                                                    <StackPanel Grid.Column="2" VerticalAlignment="Bottom" Margin="10,0,0,0">
+                                                        <TextBlock Text="{Binding RebarInfoText}" FontSize="10" Foreground="#CC3333" Margin="0,0,0,5"/>
+                                                        <TextBlock Text="{Binding LevelName}" FontSize="10" FontWeight="Bold" Foreground="#333"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource CardBox}" Margin="5,0,5,0" Grid.Column="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Style="{StaticResource CardHeader}">
+                                <TextBlock Text="HIỆU CHỈNH CỐT THÉP" Style="{StaticResource CardHeaderText}"/>
+                            </Border>
+
+                            <StackPanel Grid.Row="1" Margin="15">
+                                <DockPanel Style="{StaticResource InputRow}">
+                                    <TextBlock Text="Số lượng thép cạnh Cx:" VerticalAlignment="Center"/>
+                                    <TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right" TextAlignment="Center"
+                                    Text="{Binding Cx, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+
+                                <DockPanel Style="{StaticResource InputRow}">
+                                    <TextBlock Text="Số lượng thép cạnh Cy:" VerticalAlignment="Center"/>
+                                    <TextBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right" TextAlignment="Center"
+                                    Text="{Binding Cy, UpdateSourceTrigger=PropertyChanged}"/>
+                                </DockPanel>
+
+                                <DockPanel Style="{StaticResource InputRow}">
+                                    <TextBlock Text="Đường kính cốt thép chính:" VerticalAlignment="Center"/>
+                                    <ComboBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right" 
+                                     ItemsSource="{Binding AvailableRebarTypes}" 
+                                     SelectedItem="{Binding SelectedMainRebar}"
+                                     DisplayMemberPath="Name"/>
+                                </DockPanel>
+
+                                <DockPanel Style="{StaticResource InputRow}">
+                                    <TextBlock Text="Đường kính cốt đai chính:" VerticalAlignment="Center"/>
+                                    <ComboBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right" 
+                                     ItemsSource="{Binding AvailableRebarTypes}" 
+                                     SelectedItem="{Binding SelectedStirrupRebar}"
+                                     DisplayMemberPath="Name"/>
+                                </DockPanel>
+
+                                <DockPanel Style="{StaticResource InputRow}">
+                                    <TextBlock Text="Đường kính đai móc:" VerticalAlignment="Center"/>
+                                    <ComboBox Width="80" HorizontalAlignment="Right" DockPanel.Dock="Right" 
+                                     ItemsSource="{Binding AvailableRebarTypes}" 
+                                     SelectedItem="{Binding SelectedTieRebar}"
+                                     DisplayMemberPath="Name"/>
+                                </DockPanel>
+
+                                <TextBlock Text="Thông tin chung" HorizontalAlignment="Center" Foreground="Gray" FontWeight="Bold" Margin="0,15,0,10"/>
+
+                                <DockPanel Margin="0,0,0,5">
+                                    <TextBlock Text="Tổng hợp số cốt thép:"/>
+                                    <TextBlock Text="{Binding TotalRebarText}" FontWeight="Bold" Foreground="#CC3333" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                </DockPanel>
+
+                                <DockPanel Margin="0,0,0,5">
+                                    <TextBlock Text="Diện tích cốt thép (cm²):"/>
+                                    <TextBlock Text="{Binding RebarAreaText}" FontWeight="Bold" Foreground="#CC3333" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                </DockPanel>
+
+                                <DockPanel Margin="0,0,0,15">
+                                    <TextBlock Text="Hàm lượng cốt thép (%):"/>
+                                    <TextBlock Text="{Binding RebarRatioText}" FontWeight="Bold" Foreground="#CC3333" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                </DockPanel>
+
+                                <Button Content="ÁP DỤNG CHO CÁC TẦNG CÒN LẠI" 
+                               Command="{Binding ApplyToOtherFloorsCommand}" 
+                               Padding="0,8" Background="White" BorderBrush="LightGray" 
+                               FontWeight="Bold" Foreground="#333" Cursor="Hand"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Column="2" Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.5*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Style="{StaticResource CardBox}" Margin="0,0,0,10" Grid.Row="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="TIẾT DIỆN &amp; LOẠI ĐAI" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="15">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Bố trí thép đai:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <ComboBox DockPanel.Dock="Right" Width="120" HorizontalAlignment="Right"
+                                         ItemsSource="{Binding StirrupLayouts}" 
+                                         SelectedItem="{Binding SelectedStirrupLayout}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="2">
+                                                        <Border Width="16" Height="24" BorderBrush="#60A5FA" BorderThickness="1.5" Margin="0,0,8,0">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="1*"/>
+                                                                    <RowDefinition Height="1*"/>
+                                                                    <RowDefinition Height="1*"/>
+                                                                </Grid.RowDefinitions>
+
+                                                                <Rectangle Grid.Row="0" Fill="#DC2626" Height="1.5" VerticalAlignment="Bottom">
+                                                                    <Rectangle.Style>
+                                                                        <Style TargetType="Rectangle">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="L1, L2, L1">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Rectangle.Style>
+                                                                </Rectangle>
+
+                                                                <Rectangle Grid.Row="1" Fill="#DC2626" Height="1.5" VerticalAlignment="Bottom">
+                                                                    <Rectangle.Style>
+                                                                        <Style TargetType="Rectangle">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="L1, L2, L1">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="L1, L2">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Rectangle.Style>
+                                                                </Rectangle>
+                                                            </Grid>
+                                                        </Border>
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </DockPanel>
+
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="0,10,0,5">
+                                        <TextBlock Text="Khoảng cách đai Dày (S1):" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" HorizontalAlignment="Right" DockPanel.Dock="Right" TextAlignment="Center" 
+                                        Text="{Binding SpacingDense}"/>
+                                    </DockPanel>
+
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="0,0,0,10">
+                                        <TextBlock Text="Khoảng cách đai Thưa (S2):" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" HorizontalAlignment="Right" DockPanel.Dock="Right" TextAlignment="Center" 
+                                        Text="{Binding SpacingSparse}"/>
+                                    </DockPanel>
+
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <DockPanel Style="{StaticResource InputRow}">
+                                            <RadioButton Content="Đai móc" IsChecked="{Binding IsHookTie}" Foreground="Black" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                            <RadioButton Content="Đai lồng kín" IsChecked="{Binding IsClosedTie}" Foreground="Black" VerticalAlignment="Center"/>
+                                            <Button Content="XÓA TẤT CẢ" Command="{Binding ClearAllTiesCommand}" Width="80" DockPanel.Dock="Right" HorizontalAlignment="Right" Background="#F3F4F6" Cursor="Hand"/>
+                                        </DockPanel>
+                                    </DockPanel>
+
+                                    <Border BorderBrush="#16A34A" BorderThickness="2" Height="120" Margin="0,10,0,0">
+                                        <Viewbox Stretch="Uniform" Margin="10">
+                                            <Grid Width="240" Height="100">
+                                                <Border BorderBrush="#60A5FA" BorderThickness="{Binding MainStirrupThickness}" CornerRadius="3" Margin="0"/>
+
+                                                <ItemsControl ItemsSource="{Binding InternalTies}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <Canvas/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Path Data="{Binding PathData}" 
+                                                         Stroke="#60A5FA" 
+                                                         StrokeThickness="{Binding Thickness}" 
+                                                         Fill="Transparent"
+                                                         StrokeLineJoin="Round"
+                                                         StrokeStartLineCap="Round"
+                                                         StrokeEndLineCap="Round"/>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+
+                                                <ItemsControl ItemsSource="{Binding RebarDots}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <Canvas/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemContainerStyle>
+                                                        <Style TargetType="ContentPresenter">
+                                                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                                                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                                                        </Style>
+                                                    </ItemsControl.ItemContainerStyle>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ToggleHookCommand}" 
+                                                           CommandParameter="{Binding}" 
+                                                           Cursor="Hand">
+                                                                <Button.Template>
+                                                                    <ControlTemplate TargetType="Button">
+                                                                        <Ellipse Width="{Binding Size}" Height="{Binding Size}" Fill="#DC2626">
+                                                                            <Ellipse.RenderTransform>
+                                                                                <TranslateTransform X="{Binding HalfSize}" Y="{Binding HalfSize}"/>
+                                                                            </Ellipse.RenderTransform>
+                                                                        </Ellipse>
+                                                                    </ControlTemplate>
+                                                                </Button.Template>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Grid>
+                                        </Viewbox>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}" Grid.Row="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="THÔNG TIN CỘT" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="15">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Chiều cao dầm sàn (mm):"/>
+                                        <TextBlock Text="{Binding BeamDepth}" FontWeight="Bold" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Loại cấu kiện dầm sàn:" Foreground="Gray"/>
+                                        <TextBlock Text="{Binding BeamCategory}" Foreground="Gray" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="0,10,0,0">
+                                        <TextBlock Text="Bê tông bảo vệ trên:" VerticalAlignment="Center"/>
+                                        <TextBox Width="40" Text="{Binding TopCover}" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Bê tông bảo vệ khác:" VerticalAlignment="Center"/>
+                                        <TextBox Width="40" Text="{Binding OtherCover}" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="THÉP ĐAI">
+                <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Style="{StaticResource CardBox}" Margin="0,0,10,0" Grid.Column="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Style="{StaticResource CardHeader}">
+                                <TextBlock Text="ĐOẠN RẢI CỐT ĐAI" Style="{StaticResource CardHeaderText}"/>
+                            </Border>
+                            <StackPanel Grid.Row="1" Margin="15">
+                                <RadioButton GroupName="StirrupExtent" Content="Rải thép đai tới đáy dầm hoặc sàn" 
+                                 IsChecked="{Binding IsStirrupToBeamBottom}" Margin="0,0,0,10"/>
+                                <RadioButton GroupName="StirrupExtent" Content="Rải tới cao độ lớn nhất của đỉnh cột dầm hoặc sàn" 
+                                 IsChecked="{Binding IsStirrupToSlabTop}" Margin="0,0,0,15"/>
+                                <GroupBox Header="Thép đai kháng chấn ở trong dầm sàn" 
+                              IsEnabled="{Binding IsStirrupToSlabTop}" 
+                              BorderBrush="LightGray" Padding="10">
+                                    <StackPanel>
+                                        <DockPanel Style="{StaticResource InputRow}">
+                                            <RadioButton GroupName="SeismicMode" Content="Bố trí theo khoảng cách (mm):" 
+                                             IsChecked="{Binding IsSeismicBySpacing}" VerticalAlignment="Center"/>
+                                            <TextBox Width="60" Text="{Binding SeismicSpacing}" 
+                                         IsEnabled="{Binding IsSeismicBySpacing}" 
+                                         TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                        <DockPanel Style="{StaticResource InputRow}">
+                                            <RadioButton GroupName="SeismicMode" Content="Bố trí theo số lượng:" 
+                                             IsChecked="{Binding IsSeismicByQuantity}" VerticalAlignment="Center"/>
+                                            <TextBox Width="60" Text="{Binding SeismicQuantity}" 
+                                         IsEnabled="{Binding IsSeismicByQuantity}" 
+                                         TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <DockPanel Margin="0,20,0,0">
+                                    <TextBlock Text="Bắt đầu rải đai cách các mép 1 đoạn (mm):" VerticalAlignment="Center"/>
+                                    <TextBox Width="60" Text="{Binding StirrupOffset, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Column="1" Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.5*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Style="{StaticResource CardBox}" Margin="0,0,0,10" Grid.Row="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="QUY TẮC RẢI CỐT ĐAI CHÍNH" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="15">
+                                    <DockPanel>
+                                        <StackPanel Width="200" DockPanel.Dock="Left">
+                                            <DockPanel Style="{StaticResource InputRow}">
+                                                <TextBlock Text="A1 (mm) =" VerticalAlignment="Center"/>
+                                                <TextBox Width="70" Text="{Binding CurrentSelectedLevel.StirrupSpacing1, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource InputRow}">
+                                                <TextBlock Text="A2 (mm) =" VerticalAlignment="Center"/>
+                                                <TextBox Width="70" Text="{Binding CurrentSelectedLevel.StirrupSpacing2, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+
+                                    <TextBlock Text="A1 được bố trí trong đoạn L1 tính từ mép nút khung. L1 lấy lớn nhất trong các giá trị sau:" Foreground="Gray" TextWrapping="Wrap" Margin="0,10,0,10"/>
+
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="20,0,0,5">
+                                        <CheckBox Content="Giá trị tối thiểu (mm):" IsChecked="{Binding UseMinL1}" VerticalAlignment="Center"/>
+                                        <TextBox Width="80" Text="{Binding MinL1Value}" IsEnabled="{Binding UseMinL1}" Background="#F3F4F6" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="20,0,0,5">
+                                        <CheckBox Content="Chiều cao thông thủy cột chia cho:" IsChecked="{Binding UseClearHeightDivide}" VerticalAlignment="Center"/>
+                                        <TextBox Width="80" Text="{Binding ClearHeightDivideValue}" IsEnabled="{Binding UseClearHeightDivide}" Background="#F3F4F6" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <CheckBox Content="Chiều cao tiết diện cột" IsChecked="{Binding UseColumnSectionHeight}" Margin="20,0,0,10"/>
+
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="0,10,0,0">
+                                        <TextBlock Text="Loại móc:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <ComboBox DockPanel.Dock="Right" ItemsSource="{Binding AvailableHooks}" SelectedItem="{Binding SelectedMainTieHook}" DisplayMemberPath="Name"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}" Grid.Row="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="QUY TẮC RẢI CỐT ĐAI BỔ SUNG" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="15" VerticalAlignment="Center">
+                                    <!-- Thêm GroupName="AdditionalStirrup" để 2 nút liên kết với nhau -->
+                                    <RadioButton GroupName="AdditionalStirrup" 
+                                     Content="Bố trí toàn bộ khoảng cách đai bổ sung theo đai chính" 
+                                     IsChecked="{Binding IsAdditionalStirrupSameAsMain}" Margin="0,0,0,10"/>
+
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <!-- ĐÃ BỎ IsEnabled="False" Ở ĐÂY -->
+                                        <RadioButton GroupName="AdditionalStirrup" 
+                                         Content="Khoảng cách cốt đai bổ sung (mm):" 
+                                         IsChecked="{Binding IsAdditionalStirrupCustom}" VerticalAlignment="Center"/>
+
+                                        <!-- TextBox chỉ cho nhập số khi chọn Custom -->
+                                        <TextBox Width="80" Text="{Binding AdditionalStirrupSpacing, UpdateSourceTrigger=PropertyChanged}" 
+                                     IsEnabled="{Binding IsAdditionalStirrupCustom}" 
+                                     TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="0,10,0,0">
+                                        <TextBlock Text="Loại móc:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <!-- ComboBox chọn Móc Đai Phụ (Sáng lên khi chọn Custom) -->
+                                        <ComboBox DockPanel.Dock="Right" 
+                                      ItemsSource="{Binding AvailableHooks}" 
+                                      SelectedItem="{Binding SelectedAdditionalTieHook}" 
+                                      DisplayMemberPath="Name" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="THÉP MÓNG">
+                <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Style="{StaticResource CardBox}" Grid.Column="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Style="{StaticResource CardHeader}">
+                                <CheckBox Content="CÀI ĐẶT THÉP CHỜ MÓNG" IsChecked="True" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                            <StackPanel Grid.Row="1" Margin="10">
+                                <GroupBox Header="THÉP CHỦ &amp; KHOẢNG CÁCH RẢI ĐAI" Foreground="#CC3333" FontWeight="Bold" Margin="0,0,0,10">
+                                    <StackPanel Margin="10" TextElement.FontWeight="Normal">
+                                        <CheckBox Content="Tách thép thành 2 đoạn tại vị trí thép chờ móng" IsEnabled="False" Margin="0,0,0,10"/>
+                                        <DockPanel Style="{StaticResource InputRow}">
+                                            <CheckBox Content="Khoảng cách cốt đai (mm):" IsEnabled="False" VerticalAlignment="Center"/>
+                                            <TextBox Width="60" Text="300" IsEnabled="False" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                        <DockPanel Style="{StaticResource InputRow}" Margin="0,10,0,0">
+                                            <TextBlock Text="Hm (mm):" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                                            <TextBox Width="60" Text="450" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                        <DockPanel Style="{StaticResource InputRow}">
+                                            <TextBlock Text="Lb (mm):" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                                            <TextBox Width="60" Text="300" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Header="BỐ TRÍ HƯỚNG THÉP CHỜ MÓNG" Foreground="#CC3333" FontWeight="Bold" Height="150">
+                                    <TextBlock Text="[ Bảng điều khiển hướng D-pad ]" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" FontWeight="Normal"/>
+                                </GroupBox>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="CÀI ĐẶT CHUNG">
+                <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="ĐOẠN BẺ MÓC CỐT THÉP" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <RadioButton Content="Theo chiều dài cố định L (mm):" IsChecked="True" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="300" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <RadioButton Content="Theo đường kính (xD):" IsEnabled="False" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="10" IsEnabled="False" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="CÀI ĐẶT CỐT THÉP ĐỈNH MÁI" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10">
+                                    <RadioButton Content="Bẻ móc cốt thép tầng trên cùng" IsChecked="True" Margin="0,0,0,5"/>
+                                    <RadioButton Content="Tiếp tục chờ thép tầng trên cùng" IsEnabled="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="GÁN THÊM THÔNG TIN CHO THÉP" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10">
+                                    <CheckBox Content="Gán cao độ cột cho thép" Margin="0,0,0,5"/>
+                                    <CheckBox Content="Tự động gán Partition cho thép"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="CHIỀU DÀI NEO VÀ NỐI THÉP CỘT" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Chiều dài nối chồng (xD):" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="40" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Chiều dài neo mặc định (xD):" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="30" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <CheckBox Content="Nhấn thép tại các vị trí nối" Margin="0,5,0,5"/>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <CheckBox Content="Group thép cùng số hiệu trong cột" VerticalAlignment="Center"/>
+                                        <ComboBox Width="140" DockPanel.Dock="Right" HorizontalAlignment="Right" IsEnabled="False" SelectedIndex="0">
+                                            <ComboBoxItem>BS_REBAR_QUANTITY</ComboBoxItem>
+                                        </ComboBox>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="ĐIỀU KIỆN UỐN HOẶC CẮT THÉP" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10" Background="#F9FAFB">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Uốn thép nếu e ≤ (mm)" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="75" IsReadOnly="True" Background="#F3F4F6" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Uốn theo tỷ lệ Hd/e ≥" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="6" IsReadOnly="True" Background="#F3F4F6" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="VỊ TRÍ NỐI CỐT THÉP" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <RadioButton Content="Nối cách chân cột L = (mm)" IsChecked="True" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="0" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <RadioButton Content="Nối giữa tầng" IsEnabled="False" Margin="0,0,0,5"/>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <TextBlock Text="Khoảng cách giữa 2 lần nối (xD)" IsEnabled="False" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="0" IsEnabled="False" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <RadioButton Content="Nối thép tại 1 vị trí" IsEnabled="False" Margin="0,5,0,5"/>
+                                    <RadioButton Content="Nối thép tại 2 vị trí" IsChecked="True"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource CardBox}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{StaticResource CardHeader}">
+                                    <TextBlock Text="TÙY CHỌN Ở VỊ TRÍ DẦM SÀN" Style="{StaticResource CardHeaderText}"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="10">
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <RadioButton Content="Chọn cấu kiện dầm sàn thủ công" IsEnabled="False" VerticalAlignment="Center"/>
+                                        <Button Content="QUÉT CHỌN" Width="80" DockPanel.Dock="Right" HorizontalAlignment="Right" IsEnabled="False"/>
+                                    </DockPanel>
+                                    <RadioButton Content="Tự động tìm dầm có cao độ và chiều cao phù hợp" IsChecked="True" Margin="0,0,0,5"/>
+                                    <RadioButton Content="Tự động tìm sàn có cao độ và chiều dày phù hợp" IsEnabled="False" Margin="0,0,0,5"/>
+                                    <DockPanel Style="{StaticResource InputRow}">
+                                        <RadioButton Content="Chiều cao mặc định Hd (mm):" IsEnabled="False" VerticalAlignment="Center"/>
+                                        <TextBox Width="60" Text="200" IsEnabled="False" TextAlignment="Center" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2" Background="#F3F4F6" BorderBrush="LightGray" BorderThickness="0,1,0,0" Padding="15,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="RUN" Width="100" Height="30" FontWeight="Bold" Margin="0,0,10,0" 
+                        Background="White" BorderBrush="Gray" Cursor="Hand"
+                        Command="{Binding RunCommand}" 
+                        CommandParameter="{Binding ElementName=MainWindow}"/>
+                <Button Content="CLOSE" Width="100" Height="30" FontWeight="Bold" Background="White" BorderBrush="Gray"
+                        Command="{Binding CloseCommand}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

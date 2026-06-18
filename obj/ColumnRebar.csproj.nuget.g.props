@@ -1,0 +1,2194 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\COM 0013\.nuget\packages\;C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">7.0.0</NuGetToolVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <SourceRoot Include="C:\Users\COM 0013\.nuget\packages\" />
+    <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Language)' == 'C#' AND '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ArgumentExceptionPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ArgumentExceptionPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ArgumentExceptions\ArgumentExceptionPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ArgumentNullExceptionPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ArgumentNullExceptionPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ArgumentExceptions\ArgumentNullExceptionPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ArgumentOutOfRangeExceptionPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ArgumentOutOfRangeExceptionPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ArgumentExceptions\ArgumentOutOfRangeExceptionPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ObjectDisposedExceptionPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ArgumentExceptions\ObjectDisposedExceptionPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ArgumentExceptions\ObjectDisposedExceptionPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Base64Url.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Base64Url.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Base64Url.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\BinaryPrimitivesPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\BinaryPrimitivesPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>BinaryPrimitivesPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CallerArgumentExpressionAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CallerArgumentExpressionAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>CallerArgumentExpressionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CharPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CharPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>CharPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CollectionBuilderAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CollectionBuilderAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>CollectionBuilderAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CompilerFeatureRequiredAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\CompilerFeatureRequiredAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>CompilerFeatureRequiredAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConfigureAwaitOptions.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConfigureAwaitOptions.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ConfigureAwaitOptions.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConsolePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConsolePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ConsolePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConstantExpectedAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConstantExpectedAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ConstantExpectedAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConvertPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ConvertPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ConvertPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DateTimeOffsetPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DateTimeOffsetPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>DateTimeOffsetPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DateTimePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DateTimePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>DateTimePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DebuggerDisableUserUnhandledExceptionsAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DebuggerDisableUserUnhandledExceptionsAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>DebuggerDisableUserUnhandledExceptionsAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DelegatePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DelegatePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>DelegatePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DirectoryPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DirectoryPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>DirectoryPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DisableRuntimeMarshallingAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\DisableRuntimeMarshallingAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>DisableRuntimeMarshallingAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EmbeddedAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EmbeddedAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EmbeddedAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EncodingPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EncodingPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EncodingPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_Equal.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_Equal.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_Equal.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NoDuplicates.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NoDuplicates.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NoDuplicates.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotEmpty.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotEmpty.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotEmpty.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotEqual.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotEqual.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotEqual.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotGreater.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotGreater.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotGreater.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotGreaterThanOrEqual.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotGreaterThanOrEqual.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotGreaterThanOrEqual.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotLessThan.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotLessThan.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotLessThan.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotLessThanOrEqual.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotLessThanOrEqual.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotLessThanOrEqual.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNegative.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNegative.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotNegative.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNegativeOrZero.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNegativeOrZero.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotNegativeOrZero.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNull.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNull.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotNull.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNullOrEmpty.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNullOrEmpty.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotNullOrEmpty.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNullOrWhiteSpace.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotNullOrWhiteSpace.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotNullOrWhiteSpace.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotWhiteSpace.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotWhiteSpace.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotWhiteSpace.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotZero.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Ensure\Ensure_NotZero.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Ensure\Ensure_NotZero.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnumPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnumPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EnumPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnumerableReverseExtension.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnumerableReverseExtension.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EnumerableReverseExtension.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnumerationOptions.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnumerationOptions.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EnumerationOptions.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnvironmentPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EnvironmentPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EnvironmentPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EqualityComparerPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\EqualityComparerPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>EqualityComparerPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ExceptionDispatchInfoPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ExceptionDispatchInfoPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ExceptionDispatchInfoPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ExperimentalAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ExperimentalAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ExperimentalAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FeatureGuardAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FeatureGuardAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FeatureGuardAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FeatureSwitchDefinitionAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FeatureSwitchDefinitionAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FeatureSwitchDefinitionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FileInfoPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FileInfoPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FileInfoPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FilePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FilePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FilePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FileUnixModePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\FileUnixModePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>FileUnixModePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\GCPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\GCPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>GCPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_Equal.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_Equal.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_Equal.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotEmpty.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotEmpty.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotEmpty.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotEqual.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotEqual.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotEqual.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotGreater.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotGreater.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotGreater.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotGreaterThanOrEqual.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotGreaterThanOrEqual.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotGreaterThanOrEqual.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotLessThan.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotLessThan.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotLessThan.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotLessThanOrEqual.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotLessThanOrEqual.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotLessThanOrEqual.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNegative.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNegative.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotNegative.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNegativeOrZero.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNegativeOrZero.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotNegativeOrZero.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNull.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNull.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotNull.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNullOrEmpty.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNullOrEmpty.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotNullOrEmpty.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNullOrWhiteSpace.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotNullOrWhiteSpace.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotNullOrWhiteSpace.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotWhiteSpace.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotWhiteSpace.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotWhiteSpace.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotZero.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Guard\Guard_NotZero.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Guard\Guard_NotZero.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\GuidPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\GuidPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>GuidPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IPAddressPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IPAddressPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>IPAddressPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IndexRange\Index.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IndexRange\Index.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>IndexRange\Index.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IndexRange\Range.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IndexRange\Range.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>IndexRange\Range.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\InterlockedPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\InterlockedPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>InterlockedPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IsExternalInit.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\IsExternalInit.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>IsExternalInit.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\KeyValuePair.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\KeyValuePair.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>KeyValuePair.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Lock.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Lock.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Lock.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MD5Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MD5Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>MD5Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MatchCasing.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MatchCasing.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>MatchCasing.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MatchType.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MatchType.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>MatchType.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MathPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\MathPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>MathPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ModuleInitializerAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ModuleInitializerAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ModuleInitializerAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullability\NullabilityInfo.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullability\NullabilityInfo.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullability\NullabilityInfo.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullability\NullabilityInfoContext.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullability\NullabilityInfoContext.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullability\NullabilityInfoContext.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullability\Polyfill_Nullability.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullability\Polyfill_Nullability.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullability\Polyfill_Nullability.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\AllowNullAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\AllowNullAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\AllowNullAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\DisallowNullAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\DisallowNullAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\DisallowNullAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\DoesNotReturnAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\DoesNotReturnAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\DoesNotReturnAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\DoesNotReturnIfAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\DoesNotReturnIfAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\DoesNotReturnIfAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MaybeNullAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MaybeNullAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\MaybeNullAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MaybeNullWhenAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MaybeNullWhenAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\MaybeNullWhenAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MemberNotNullAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MemberNotNullAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\MemberNotNullAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MemberNotNullWhenAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\MemberNotNullWhenAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\MemberNotNullWhenAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\NotNullAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\NotNullAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\NotNullAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\NotNullIfNotNullAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\NotNullIfNotNullAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\NotNullIfNotNullAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\NotNullWhenAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Nullable\NotNullWhenAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Nullable\NotNullWhenAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\BytePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\BytePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\BytePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\DecimalPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\DecimalPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\DecimalPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\DoublePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\DoublePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\DoublePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\Int16Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\Int16Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\Int16Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\Int32Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\Int32Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\Int32Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\Int64Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\Int64Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\Int64Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\IntPtrPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\IntPtrPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\IntPtrPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\SBytePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\SBytePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\SBytePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\SinglePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\SinglePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\SinglePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UInt16Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UInt16Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\UInt16Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UInt32Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UInt32Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\UInt32Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UInt64Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UInt64Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\UInt64Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UIntPtrPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Numbers\UIntPtrPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Numbers\UIntPtrPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\OperatingSystemCache.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\OperatingSystemCache.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>OperatingSystemCache.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\OperatingSystemPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\OperatingSystemPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>OperatingSystemPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\OverloadResolutionPriorityAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\OverloadResolutionPriorityAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>OverloadResolutionPriorityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ParallelPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ParallelPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ParallelPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ParamCollectionAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ParamCollectionAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ParamCollectionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PathPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PathPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PathPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\OSPlatformAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\OSPlatformAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\OSPlatformAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\ObsoletedOSPlatformAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\ObsoletedOSPlatformAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\ObsoletedOSPlatformAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\SupportedOSPlatformAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\SupportedOSPlatformAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\SupportedOSPlatformAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\SupportedOSPlatformGuardAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\SupportedOSPlatformGuardAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\SupportedOSPlatformGuardAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\TargetPlatformAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\TargetPlatformAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\TargetPlatformAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\UnsupportedOSPlatformAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\UnsupportedOSPlatformAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\UnsupportedOSPlatformAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\UnsupportedOSPlatformGuardAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\PlatformCompatibility\UnsupportedOSPlatformGuardAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>PlatformCompatibility\UnsupportedOSPlatformGuardAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ArraySegment.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ArraySegment.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_ArraySegment.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_BitConverter.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_BitConverter.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_BitConverter.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_CancellationToken.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_CancellationToken.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_CancellationToken.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_CancellationTokenSource.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_CancellationTokenSource.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_CancellationTokenSource.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Char.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Char.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Char.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Compression.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Compression.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Compression.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ConcurrentBag.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ConcurrentBag.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_ConcurrentBag.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ConcurrentQueue.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ConcurrentQueue.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_ConcurrentQueue.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_DateTime.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_DateTime.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_DateTime.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Dictionary.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Dictionary.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Dictionary.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_DictionaryEntry.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_DictionaryEntry.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_DictionaryEntry.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_DirectoryInfo.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_DirectoryInfo.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_DirectoryInfo.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Encoding.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_GetByteCount.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_GetByteCount.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Encoding_GetByteCount.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_GetCharCount.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_GetCharCount.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Encoding_GetCharCount.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_GetChars.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_GetChars.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Encoding_GetChars.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_TryGet.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Encoding_TryGet.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Encoding_TryGet.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_HashSet.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_HashSet.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_HashSet.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_HttpClient.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_HttpClient.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_HttpClient.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_HttpContent.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_HttpContent.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_HttpContent.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_AggregateBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_AggregateBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_AggregateBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Chunk.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Chunk.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Chunk.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_CountBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_CountBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_CountBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_DistinctBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_DistinctBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_DistinctBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_ElementAt.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_ElementAt.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_ElementAt.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Except.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Except.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Except.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_FirstOrDefault.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_FirstOrDefault.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_FirstOrDefault.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Index.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Index.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Index.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_IntersectBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_IntersectBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_IntersectBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_LastOrDefault.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_LastOrDefault.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_LastOrDefault.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_LeftJoin.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_LeftJoin.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_LeftJoin.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Max.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Max.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Max.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_MaxBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_MaxBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_MaxBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Min.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Min.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Min.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_MinBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_MinBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_MinBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Order.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Order.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Order.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_RightJoin.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_RightJoin.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_RightJoin.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_SingleOrDefault.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_SingleOrDefault.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_SingleOrDefault.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_SkipLast.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_SkipLast.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_SkipLast.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Take.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Take.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Take.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_TakeLast.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_TakeLast.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_TakeLast.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_ThrowHelper.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_ThrowHelper.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_ThrowHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_ToDictionary.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_ToDictionary.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_ToDictionary.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_TryGetNonEnumeratedCount.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_TryGetNonEnumeratedCount.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_TryGetNonEnumeratedCount.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_UnionBy.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_UnionBy.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_UnionBy.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Zip.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IEnumerable_Zip.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IEnumerable_Zip.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IReadOnlyDictionary.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_IReadOnlyDictionary.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_IReadOnlyDictionary.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_KeyValuePair.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_KeyValuePair.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_KeyValuePair.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_List.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_List.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_List.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_CommonPrefixLength.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_CommonPrefixLength.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_CommonPrefixLength.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_Contains.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_Contains.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_Contains.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_ContainsAnyExcept.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_ContainsAnyExcept.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_ContainsAnyExcept.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_ContainsAnyInRange.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_ContainsAnyInRange.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_ContainsAnyInRange.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_EndsWith.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_EndsWith.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_EndsWith.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_IndexOfAnyExcept.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_IndexOfAnyExcept.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_IndexOfAnyExcept.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_LastIndexOfAnyExcept.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_LastIndexOfAnyExcept.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_LastIndexOfAnyExcept.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSort.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSort.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_SpanSort.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSplit.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSplit.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_SpanSplit.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSplitEnumerator.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSplitEnumerator.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_SpanSplitEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSplitEnumeratorMode.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SpanSplitEnumeratorMode.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_SpanSplitEnumeratorMode.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SplitRanges.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_SplitRanges.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_SplitRanges.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_StartsWith.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Memory_StartsWith.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Memory_StartsWith.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_MethodInfo.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_MethodInfo.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_MethodInfo.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_MicroNanosecondAdd.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_MicroNanosecondAdd.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_MicroNanosecondAdd.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Process.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Process.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Process.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ProcessStartInfo.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_ProcessStartInfo.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_ProcessStartInfo.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Queue.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Queue.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Queue.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Random.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Random.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Random.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Socket.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Socket.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Socket.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_SortedList.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_SortedList.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_SortedList.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stack.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stack.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Stack.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Stream.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream_DisposeAsync.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream_DisposeAsync.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Stream_DisposeAsync.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream_Read.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream_Read.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Stream_Read.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream_Write.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Stream_Write.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Stream_Write.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_String.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_String.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_String.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_Append.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_Append.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder_Append.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_AppendJoin.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_AppendJoin.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder_AppendJoin.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_CopyTo.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_CopyTo.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder_CopyTo.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_GetChunks.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_GetChunks.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder_GetChunks.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_Insert.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_Insert.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder_Insert.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_Replace.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringBuilder_Replace.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringBuilder_Replace.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringNormalization.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_StringNormalization.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_StringNormalization.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Task.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Task.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Task.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TaskCompletionSource.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TaskCompletionSource.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_TaskCompletionSource.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TcpClient.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TcpClient.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_TcpClient.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TextReader.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TextReader.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_TextReader.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TextWriter.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TextWriter.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_TextWriter.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TryFormatToByteSpan.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TryFormatToByteSpan.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_TryFormatToByteSpan.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TryFormatToCharSpan.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_TryFormatToCharSpan.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_TryFormatToCharSpan.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Type.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_Type.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_Type.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_UdpClient.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_UdpClient.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_UdpClient.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_XDocument.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_XDocument.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_XDocument.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_XElement.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_XElement.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_XElement.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_XNode.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Polyfill_XNode.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Polyfill_XNode.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RandomNumberGeneratorPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RandomNumberGeneratorPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>RandomNumberGeneratorPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RandomPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RandomPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>RandomPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ReadOnlySpanAction.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ReadOnlySpanAction.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ReadOnlySpanAction.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\CapturePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\CapturePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\CapturePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\Polyfill_Regex.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\Polyfill_Regex.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\Polyfill_Regex.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\RegexCache.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\RegexCache.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\RegexCache.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\RegexPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\RegexPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\RegexPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\ValueMatch.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\ValueMatch.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\ValueMatch.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\ValueMatchEnumerator.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\ValueMatchEnumerator.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\ValueMatchEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\ValueSplitEnumerator.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Regex\ValueSplitEnumerator.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Regex\ValueSplitEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RequiredMemberAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RequiredMemberAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>RequiredMemberAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RequiresPreviewFeaturesAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RequiresPreviewFeaturesAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>RequiresPreviewFeaturesAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ResolveHttpGlobalProblem.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ResolveHttpGlobalProblem.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ResolveHttpGlobalProblem.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RuntimeFeaturePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\RuntimeFeaturePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>RuntimeFeaturePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA1Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA1Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SHA1Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA256Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA256Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SHA256Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA384Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA384Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SHA384Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA512Polyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SHA512Polyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SHA512Polyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SetsRequiredMembersAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SetsRequiredMembersAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SetsRequiredMembersAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SkipLocalsInitAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SkipLocalsInitAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SkipLocalsInitAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SpanAction.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SpanAction.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SpanAction.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SpanLineEnumerator.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SpanLineEnumerator.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SpanLineEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StackTraceHiddenAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StackTraceHiddenAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StackTraceHiddenAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StopwatchPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StopwatchPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StopwatchPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\AppendInterpolatedStringHandler.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\AppendInterpolatedStringHandler.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringInterpolation\AppendInterpolatedStringHandler.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\DefaultInterpolatedStringHandler.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\DefaultInterpolatedStringHandler.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringInterpolation\DefaultInterpolatedStringHandler.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\InterpolatedStringHandlerArgumentAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\InterpolatedStringHandlerArgumentAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringInterpolation\InterpolatedStringHandlerArgumentAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\InterpolatedStringHandlerAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\InterpolatedStringHandlerAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringInterpolation\InterpolatedStringHandlerAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\Polyfill_StringBuilder_Append.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\Polyfill_StringBuilder_Append.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringInterpolation\Polyfill_StringBuilder_Append.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\Polyfill_StringBuilder_AppendLine.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringInterpolation\Polyfill_StringBuilder_AppendLine.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringInterpolation\Polyfill_StringBuilder_AppendLine.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringSyntaxAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\StringSyntaxAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>StringSyntaxAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SuppressGCTransitionAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\SuppressGCTransitionAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>SuppressGCTransitionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TaskCompletionSource.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TaskCompletionSource.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>TaskCompletionSource.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TaskPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TaskPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>TaskPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TaskWhenEachPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TaskWhenEachPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>TaskWhenEachPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TimeSpanPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TimeSpanPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>TimeSpanPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\DynamicDependencyAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\DynamicDependencyAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\DynamicDependencyAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\DynamicallyAccessedMemberTypes.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\DynamicallyAccessedMemberTypes.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\DynamicallyAccessedMemberTypes.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\DynamicallyAccessedMembersAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\DynamicallyAccessedMembersAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\DynamicallyAccessedMembersAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\RequiresAssemblyFilesAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\RequiresAssemblyFilesAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\RequiresAssemblyFilesAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\RequiresDynamicCodeAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\RequiresDynamicCodeAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\RequiresDynamicCodeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\RequiresUnreferencedCodeAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\RequiresUnreferencedCodeAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\RequiresUnreferencedCodeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\UnconditionalSuppressMessageAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\Trimming\UnconditionalSuppressMessageAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>Trimming\UnconditionalSuppressMessageAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TypePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\TypePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>TypePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnixFileMode.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnixFileMode.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>UnixFileMode.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnmanagedCallersOnlyAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnmanagedCallersOnlyAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>UnmanagedCallersOnlyAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnreachableException.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnreachableException.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>UnreachableException.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnscopedRefAttribute.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\UnscopedRefAttribute.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>UnscopedRefAttribute.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ValueTaskPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ValueTaskPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ValueTaskPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\XDocumentPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\XDocumentPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>XDocumentPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\XElementPolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\XElementPolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>XElementPolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\XNodePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\XNodePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>XNodePolyfill.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ZLibStream.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ZLibStream.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ZLibStream.cs</Link>
+    </Compile>
+    <Compile Include="$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ZipFilePolyfill.cs" Condition="Exists('$(NuGetPackageRoot)polyfill\10.5.1\contentFiles\cs\net48\ZipFilePolyfill.cs')">
+      <NuGetPackageId>Polyfill</NuGetPackageId>
+      <NuGetPackageVersion>10.5.1</NuGetPackageVersion>
+      <NuGetItemType>Compile</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>ZipFilePolyfill.cs</Link>
+    </Compile>
+  </ItemGroup>
+</Project>
