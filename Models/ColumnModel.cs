@@ -23,6 +23,12 @@ namespace ColumnRebar.Models
         // MỚI: Biến lưu trạng thái xem chấm đỏ có đang được chọn ở Click 1 hay không
         [ObservableProperty] private bool _isSelected;
     }
+    public class TieStyleOption
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool IsRectangular { get; set; } // False = Click 1 điểm (như Item 1), True = Click 2 điểm chéo nhau (Item 2-8)
+    }
     public class RebarLine
     {
         public double X1 { get; set; }
@@ -93,6 +99,25 @@ namespace ColumnRebar.Models
         [ObservableProperty]
         private bool _isClosedTie = false; // true = đai lồng kín, false = đai móc
         public ElementId ColumnId { get; set; }
+        // Thêm vào class ColumnPreviewItem của bạn
+        public bool IsDataLoaded { get; set; } = false;
+
+        // Lưu các thông số cơ bản
+        public int SavedCx { get; set; }
+        public int SavedCy { get; set; }
+        public string SavedSpacingDense { get; set; }
+        public string SavedSpacingSparse { get; set; }
+
+        // Lưu các object thép được chọn
+        public RebarTypeOption SavedMainRebar { get; set; }
+        public RebarTypeOption SavedStirrupRebar { get; set; }
+        public RebarTypeOption SavedTieRebar { get; set; }
+        public StirrupLayoutOption SavedStirrupLayout { get; set; }
+
+        // Lưu trạng thái vẽ đai phụ (Cực kỳ quan trọng để không mất hình đai khi chuyển tầng)
+        public List<int> SavedDotTies { get; set; } = new List<int>();
+        public List<Tuple<int, int>> SavedCustomClosedTieIndices { get; set; } = new List<Tuple<int, int>>();
+        public List<Tuple<int, int, int>> SavedAdvancedClosedTieIndices { get; set; } = new List<Tuple<int, int, int>>();
     }
     public class RebarHookOption
     {

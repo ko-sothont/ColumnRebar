@@ -74,16 +74,28 @@ namespace ColumnRebar.ViewModels
             UpdateRebarDiagram();
             GenerateColumnPreview();
         }
+        private bool _isLoadingData = false; // Cờ chặn ghi đè dữ liệu khi đang load
+        private ColumnPreviewItem _previousColumnPreview;
 
-        // === THÊM MỚI 2: Xử lý sự kiện khi click chọn tầng ===
         partial void OnSelectedColumnPreviewChanged(ColumnPreviewItem value)
         {
+            // Nếu đang trong quá trình load data thì không làm gì cả để tránh vòng lặp
+            if (_isLoadingData) return;
+
+            // 1. LƯU dữ liệu của tầng CŨ
+            if (_previousColumnPreview != null && _previousColumnPreview != value)
+            {
+                SaveCurrentUiStateToModel(_previousColumnPreview);
+            }
+
+            // 2. TẢI dữ liệu của tầng MỚI
             if (value != null)
             {
-                ExtractExistingRebarFromRevit(value);
+                LoadDataForSelectedColumn(value);
             }
-        }
 
+            _previousColumnPreview = value;
+        }
         public ColumnRebarViewModel(Document doc, List<FamilyInstance> columns)
         {
             _doc = doc;
@@ -144,7 +156,14 @@ namespace ColumnRebar.ViewModels
         private void GenerateColumnPreview()
         {
             if (SelectedColumns == null || SelectedColumns.Count == 0) return;
-
+            if (ColumnPreviews != null && ColumnPreviews.Count > 0)
+            {
+                if (SelectedColumnPreview != null)
+                {
+                    SelectedColumnPreview.RebarInfoText = $"Thép chủ: {TotalRebarText}\nKiểu phân bố: {SelectedStirrupLayout?.Name ?? ""}";
+                }
+                return; // Thoát hàm luôn, không cho chạy phần code "new List<ColumnPreviewItem>()" bên dưới
+            }
             var previews = new List<ColumnPreviewItem>();
             string layoutName = SelectedStirrupLayout?.Name ?? "";
             var sortedColumns = SelectedColumns
@@ -277,13 +296,11 @@ namespace ColumnRebar.ViewModels
             IList<Rebar> rebars = rebarHostData.GetRebarsInHost().Cast<Rebar>().ToList();
             if (!rebars.Any()) return;
 
-            // --- SỬA LỖI 1: Phân loại thép chủ và thép đai an toàn ---
             List<Rebar> mainRebars = new List<Rebar>();
             List<Rebar> stirrups = new List<Rebar>();
 
             foreach (var r in rebars)
             {
-                // Lấy hình dáng thép để kiểm tra
                 RebarShape shape = _doc.GetElement(r.GetShapeId()) as RebarShape;
                 if (shape != null && shape.RebarStyle == RebarStyle.StirrupTie)
                 {
@@ -295,32 +312,53 @@ namespace ColumnRebar.ViewModels
                 }
             }
 
-            // Lấy thông số thép chủ
+            // --- 1. LẤY THÔNG SỐ THÉP CHỦ VÀ TÍNH CX, CY ---
             if (mainRebars.Any())
             {
                 var mainBar = mainRebars.First();
                 var matchedType = AvailableRebarTypes.FirstOrDefault(t => t.Id == mainBar.GetTypeId());
-                if (matchedType != null) SelectedMainRebar = matchedType;
+
+                // Phải gán vào item.Saved... để hàm LoadData phía sau sử dụng
+                if (matchedType != null) item.SavedMainRebar = matchedType;
+
+                // Đếm tổng số lượng thép chủ trong cột
+                int totalMainBars = 0;
+                foreach (var r in mainRebars)
+                {
+                    totalMainBars += r.Quantity;
+                }
+
+                // Nội suy Cx và Cy dựa vào tổng số thép và tỷ lệ BxH của cột
+                if (totalMainBars >= 4)
+                {
+                    double ratio = (ColumnWidth > 0 && ColumnHeight > 0) ? (ColumnWidth / ColumnHeight) : 1.0;
+                    double sumCxCy = (totalMainBars + 4) / 2.0;
+
+                    int cy = (int)Math.Round(sumCxCy / (1.0 + ratio));
+                    if (cy < 2) cy = 2;
+
+                    int cx = (int)Math.Round(sumCxCy - cy);
+                    if (cx < 2) cx = 2;
+
+                    // Lưu vào item
+                    item.SavedCx = cx;
+                    item.SavedCy = cy;
+                }
             }
 
-            // Lấy thông số thép đai
+            // --- 2. LẤY THÔNG SỐ THÉP ĐAI ---
             if (stirrups.Any())
             {
                 var stirrup = stirrups.First();
                 var matchedStirrupType = AvailableRebarTypes.FirstOrDefault(t => t.Id == stirrup.GetTypeId());
-                if (matchedStirrupType != null) SelectedStirrupRebar = matchedStirrupType;
 
-                // --- CÁCH MỚI: Đọc khoảng cách đai trực tiếp từ thuộc tính MaxSpacing ---
-                // MaxSpacing luôn trả về đơn vị hệ nội bộ của Revit là feet
+                if (matchedStirrupType != null) item.SavedStirrupRebar = matchedStirrupType;
+
                 double spacingFeet = stirrup.MaxSpacing;
-
-                // Chuyển đổi feet sang milimet
                 double spacingMm = Math.Round(spacingFeet * 304.8);
-
                 if (spacingMm > 0)
                 {
-                    // Gán giá trị vào thuộc tính của ViewModel (ví dụ ô Đai dày)
-                    SpacingDense = spacingMm.ToString();
+                    item.SavedSpacingDense = spacingMm.ToString();
                 }
             }
         }
@@ -465,6 +503,7 @@ namespace ColumnRebar.ViewModels
         {
             if (SelectedMainRebar == null) return;
 
+            // --- 1. PHẦN TÍNH TOÁN TEXT (An toàn) ---
             int totalRebars = (Cx * 2) + (Cy * 2) - 4;
             if (totalRebars < 4) totalRebars = 4;
 
@@ -482,28 +521,104 @@ namespace ColumnRebar.ViewModels
                 RebarRatioText = $"{Math.Round(ratio, 2)} %";
             }
 
-            UpdateRebarDiagram();
-            RefreshInternalTies();
-            GenerateColumnPreview();
+            // --- 2. PHẦN VẼ LẠI UI (Chỉ chạy khi người dùng thao tác tay, KHÔNG chạy khi đang Load) ---
+            if (!_isLoadingData)
+            {
+                UpdateRebarDiagram();
+                RefreshInternalTies();
+                GenerateColumnPreview();
+            }
         }
 
         [RelayCommand]
         private void ApplyToOtherFloors()
         {
-            // Logic lưu cấu hình của tầng hiện tại copy cho các tầng trên
-        }
+            // 1. Kiểm tra xem có đang chọn tầng nào không
+            if (SelectedColumnPreview == null || ColumnPreviews == null || ColumnPreviews.Count <= 1)
+            {
+                System.Windows.MessageBox.Show("Vui lòng chọn một tầng để áp dụng cấu hình.");
+                return;
+            }
 
+            // 2. Ép hệ thống lưu ngay các thông số trên màn hình vào Tầng hiện tại 
+            // (đề phòng người dùng vừa gõ số mới xong nhấn Apply luôn mà chưa click ra ngoài)
+            SaveCurrentUiStateToModel(SelectedColumnPreview);
+
+            // 3. Duyệt qua tất cả các tầng trong danh sách
+            foreach (var item in ColumnPreviews)
+            {
+                // Bỏ qua tầng đang được chọn (không cần tự copy cho chính mình)
+                if (item.ColumnId == SelectedColumnPreview.ColumnId) continue;
+
+                // --- COPY THÔNG SỐ CƠ BẢN ---
+                item.SavedCx = SelectedColumnPreview.SavedCx;
+                item.SavedCy = SelectedColumnPreview.SavedCy;
+                item.SavedSpacingDense = SelectedColumnPreview.SavedSpacingDense;
+                item.SavedSpacingSparse = SelectedColumnPreview.SavedSpacingSparse;
+
+                item.SavedMainRebar = SelectedColumnPreview.SavedMainRebar;
+                item.SavedStirrupRebar = SelectedColumnPreview.SavedStirrupRebar;
+                item.SavedTieRebar = SelectedColumnPreview.SavedTieRebar;
+                item.SavedStirrupLayout = SelectedColumnPreview.SavedStirrupLayout;
+
+                // --- COPY ĐAI MÓC (Cực kỳ quan trọng: Phải dùng từ khóa 'new' để tách biệt bộ nhớ) ---
+                if (SelectedColumnPreview.SavedDotTies != null)
+                {
+                    // Tạo một List mới hoàn toàn chép từ List cũ, tránh lỗi sửa Tầng 2 bị dính sang Tầng 1
+                    item.SavedDotTies = new List<int>(SelectedColumnPreview.SavedDotTies);
+                }
+                else
+                {
+                    item.SavedDotTies = new List<int>();
+                }
+
+                // --- COPY ĐAI LỒNG KÍN ---
+                if (SelectedColumnPreview.SavedCustomClosedTieIndices != null)
+                {
+                    item.SavedCustomClosedTieIndices = new List<Tuple<int, int>>(SelectedColumnPreview.SavedCustomClosedTieIndices);
+                }
+                else
+                {
+                    item.SavedCustomClosedTieIndices = new List<Tuple<int, int>>();
+                }
+
+                // Đánh dấu là tầng này đã có dữ liệu (không cần tự động quét mô hình Revit nữa)
+                item.IsDataLoaded = true;
+
+                // --- CẬP NHẬT LẠI DÒNG CHỮ PREVIEW BÊN CỘT TRÁI ---
+                int totalRebars = (item.SavedCx * 2) + (item.SavedCy * 2) - 4;
+                if (totalRebars < 4) totalRebars = 4;
+
+                string rebarName = item.SavedMainRebar != null ? item.SavedMainRebar.Name : "";
+                string layoutName = item.SavedStirrupLayout != null ? item.SavedStirrupLayout.Name : "";
+
+                item.RebarInfoText = $"Thép chủ: {totalRebars} {rebarName}\nKiểu phân bố: {layoutName}";
+            }
+
+            // 4. Thông báo cho người dùng biết thao tác đã thành công
+            System.Windows.MessageBox.Show("Đã áp dụng cấu hình thép của tầng hiện tại cho tất cả các tầng khác!",
+                                           "Thành công",
+                                           System.Windows.MessageBoxButton.OK,
+                                           System.Windows.MessageBoxImage.Information);
+        }
         [RelayCommand]
         private void Run(System.Windows.Window window)
         {
+            // ===============================================
+            // BƯỚC QUAN TRỌNG NHẤT: Lưu ngay giao diện đang hiển thị vào bộ nhớ
+            // (Đảm bảo số liệu bạn vừa sửa không bị mất trước khi chạy)
+            // ===============================================
+            if (SelectedColumnPreview != null)
+            {
+                SaveCurrentUiStateToModel(SelectedColumnPreview);
+            }
+
             using (Transaction t = new Transaction(_doc, "Vẽ thép cột toàn diện"))
             {
                 t.Start();
                 try
                 {
-                    // ===============================================
-                    // 1. TÌM KIẾM VÀ TỰ ĐỘNG TẠO MÓC (NẾU THIẾU)
-                    // ===============================================
+                    // (Phần tạo Hook giữ nguyên của bạn)
                     string mainHookName = SelectedMainTieHook != null ? SelectedMainTieHook.Name : "135";
                     string addHookName = SelectedAdditionalTieHook != null ? SelectedAdditionalTieHook.Name : mainHookName;
 
@@ -539,24 +654,35 @@ namespace ColumnRebar.ViewModels
                         }
                     }
 
-                    // === THÊM MỚI 5: Quyết định vẽ cột nào thay vì fix cứng SelectedColumns ===
-                    List<FamilyInstance> columnsToRun = new List<FamilyInstance>();
-                    if (SelectedColumnPreview != null)
-                    {
-                        // Vẽ TẦNG ĐƯỢC CHỌN
-                        var selectedCol = SelectedColumns.FirstOrDefault(c => c.Id == SelectedColumnPreview.ColumnId);
-                        if (selectedCol != null) columnsToRun.Add(selectedCol);
-                    }
-                    else
-                    {
-                        // Vẽ TẤT CẢ nếu không click cột nào
-                        columnsToRun = SelectedColumns;
-                    }
+                    // ===============================================
+                    // SỬA LỖI ĐA TẦNG: Bắt buộc quét qua TẤT CẢ các cột
+                    // ===============================================
+                    List<FamilyInstance> columnsToRun = SelectedColumns;
+                    var currentDisplayItem = SelectedColumnPreview; // Nhớ lại tầng đang xem để tí trả về
 
-                    // Thay đổi foreach để sử dụng danh sách mới ở trên
                     foreach (var col in columnsToRun)
                     {
-                        // CHUẨN BỊ DỮ LIỆU
+                        // ---- ĐOẠN MA THUẬT: Đổi setting giao diện theo đúng tầng đang chuẩn bị vẽ ----
+                        var previewItem = ColumnPreviews.FirstOrDefault(p => p.ColumnId == col.Id);
+                        if (previewItem != null)
+                        {
+                            // Nếu tầng nào người dùng chưa click vào -> Đắp tạm dữ liệu của tầng hiện tại sang
+                            if (!previewItem.IsDataLoaded)
+                            {
+                                ApplyDefaultDataToItem(previewItem);
+                            }
+
+                            // Ép giao diện thay đổi sang thông số của Tầng này (Cx, Cy, RebarDots...)
+                            LoadDataForSelectedColumn(previewItem);
+                        }
+
+                        // ===============================================
+                        // BƯỚC QUAN TRỌNG: Xoá thép cũ của cột này trước khi vẽ
+                        // Nếu không có hàm này, mỗi lần Run Revit sẽ đẻ thêm 1 đống thép trùng nhau
+                        // ===============================================
+                        ClearExistingRebars(col);
+
+                        // CHUẨN BỊ DỮ LIỆU TỪ UI (Lúc này UI đã biến thành thông số của tầng tương ứng)
                         RebarBarType mainBarType = _doc.GetElement(SelectedMainRebar.Id) as RebarBarType;
                         RebarBarType stirrupBarType = _doc.GetElement(SelectedStirrupRebar.Id) as RebarBarType;
                         RebarBarType tieBarType = _doc.GetElement(SelectedTieRebar.Id) as RebarBarType;
@@ -581,9 +707,7 @@ namespace ColumnRebar.ViewModels
                         double spanX_Rev = (bb.Max.X - bb.Min.X) - 2 * offsetRev;
                         double spanY_Rev = (bb.Max.Y - bb.Min.Y) - 2 * offsetRev;
 
-                        // ===============================================
                         // 2. THUẬT TOÁN ÁNH XẠ UI -> REVIT 
-                        // ===============================================
                         double dotSizeUI = SelectedMainRebar.DiameterMm * 0.6;
                         if (dotSizeUI < 6) dotSizeUI = 6; if (dotSizeUI > 20) dotSizeUI = 20;
                         double offsetUI = dotSizeUI / 2;
@@ -592,7 +716,8 @@ namespace ColumnRebar.ViewModels
 
                         bool isSwapped = spanY_Rev > spanX_Rev;
 
-                        Func<double, double, XYZ> GetRevitPt = (uiX, uiY) => {
+                        Func<double, double, XYZ> GetRevitPt = (uiX, uiY) =>
+                        {
                             double ratioX = (uiX - offsetUI) / spanX_UI;
                             double ratioY = (uiY - offsetUI) / spanY_UI;
 
@@ -610,9 +735,7 @@ namespace ColumnRebar.ViewModels
                             return new XYZ(px, py, 0);
                         };
 
-                        // ===============================================
                         // 3. TẠO THÉP CHỦ
-                        // ===============================================
                         var drawnMainBars = new HashSet<string>();
                         foreach (var dot in RebarDots)
                         {
@@ -626,9 +749,7 @@ namespace ColumnRebar.ViewModels
                             }
                         }
 
-                        // ===============================================
-                        // 4. HÀM TẠO MẢNG THÉP ĐAI LÕI (TRẢ VỀ NGUYÊN BẢN SẠCH SẼ)
-                        // ===============================================
+                        // 4. HÀM TẠO MẢNG THÉP ĐAI LÕI
                         double sDense = 100.0 / 304.8;
                         if (double.TryParse(SpacingDense, out double sd) && sd > 0) sDense = sd / 304.8;
                         double sSparse = 200.0 / 304.8;
@@ -695,9 +816,7 @@ namespace ColumnRebar.ViewModels
                                 }
                             };
 
-                        // ===============================================
                         // 5. VẼ ĐAI BAO NGOÀI
-                        // ===============================================
                         double stirrupExt = mainBarRadius + (stirrupBarType.BarModelDiameter / 2.0);
                         XYZ p1 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
                         XYZ p2 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
@@ -707,9 +826,7 @@ namespace ColumnRebar.ViewModels
 
                         ProcessProfileZones(outerProfile, stirrupBarType, RebarStyle.StirrupTie, mainStirrupHook, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
 
-                        // ===============================================
                         // 6. VẼ ĐAI PHỤ BÊN TRONG 
-                        // ===============================================
                         double tieExt = mainBarRadius + (tieBarType.BarModelDiameter / 2.0);
 
                         var drawnHooks = new HashSet<string>();
@@ -762,6 +879,12 @@ namespace ColumnRebar.ViewModels
                                 }
                             }
                         }
+                    } // Hết vòng lặp Foreach
+
+                    // Trả lại diện mạo ban đầu cho người dùng sau khi chạy xong
+                    if (currentDisplayItem != null)
+                    {
+                        LoadDataForSelectedColumn(currentDisplayItem);
                     }
 
                     t.Commit();
@@ -772,6 +895,142 @@ namespace ColumnRebar.ViewModels
                     t.RollBack();
                     System.Windows.MessageBox.Show("Lỗi khi vẽ thép: " + ex.Message);
                 }
+            }
+        }
+        // === HÀM LƯU DỮ LIỆU TỪ GIAO DIỆN VÀO TẦNG CŨ ===
+        private void SaveCurrentUiStateToModel(ColumnPreviewItem item)
+        {
+            // Bỏ qua nếu item rỗng hoặc đang trong quá trình gán dữ liệu tự động
+            if (item == null || _isLoadingData) return;
+
+            // 1. Lưu các thông số cơ bản (bạn giữ nguyên các biến bạn đang có)
+            item.SavedCx = this.Cx;
+            item.SavedCy = this.Cy;
+            item.SavedSpacingDense = this.SpacingDense;
+            item.SavedSpacingSparse = this.SpacingSparse;
+
+            item.SavedMainRebar = this.SelectedMainRebar;
+            item.SavedStirrupRebar = this.SelectedStirrupRebar;
+            item.SavedTieRebar = this.SelectedTieRebar;
+            item.SavedStirrupLayout = this.SelectedStirrupLayout;
+
+            // ==========================================================
+            // 2. LƯU TRẠNG THÁI ĐAI MÓC CỦA TỪNG CHẤM ĐỎ TẠI ĐÂY
+            // ==========================================================
+            if (item.SavedDotTies == null) item.SavedDotTies = new List<int>();
+            item.SavedDotTies.Clear(); // Xóa data cũ của tầng này
+            foreach (var dot in RebarDots)
+            {
+                // Lưu lại giá trị đai móc (0 hoặc 1) của từng chấm
+                item.SavedDotTies.Add(dot.TieType);
+            }
+
+            // ==========================================================
+            // 3. LƯU TRẠNG THÁI ĐAI LỒNG KÍN (Dựa vào vị trí Index)
+            // ==========================================================
+            if (item.SavedCustomClosedTieIndices == null) item.SavedCustomClosedTieIndices = new List<Tuple<int, int>>();
+            item.SavedCustomClosedTieIndices.Clear();
+
+            if (_customClosedTies != null)
+            {
+                foreach (var tie in _customClosedTies)
+                {
+                    int index1 = RebarDots.IndexOf(tie.Item1);
+                    int index2 = RebarDots.IndexOf(tie.Item2);
+
+                    if (index1 >= 0 && index2 >= 0)
+                    {
+                        item.SavedCustomClosedTieIndices.Add(new Tuple<int, int>(index1, index2));
+                    }
+                }
+            }
+
+            item.IsDataLoaded = true;
+        }
+
+        // === HÀM TẢI DỮ LIỆU TỪ TẦNG MỚI LÊN GIAO DIỆN ===
+        private void LoadDataForSelectedColumn(ColumnPreviewItem item)
+        {
+            if (item == null) return;
+
+            // 1. BẬT CỜ KHÓA: Báo cho ViewModel biết đang thao tác gán dữ liệu, đừng tự động tính toán hay lưu đè
+            _isLoadingData = true;
+
+            // 2. XỬ LÝ DỮ LIỆU NGUỒN
+            if (!item.IsDataLoaded)
+            {
+                // Nếu click lần đầu tiên -> Quét Revit. 
+                ExtractExistingRebarFromRevit(item);
+                item.IsDataLoaded = true;
+            }
+
+            // 3. ĐỔ DỮ LIỆU TỪ ITEM RA GIAO DIỆN 
+            this.Cx = item.SavedCx > 0 ? item.SavedCx : 2;
+            this.Cy = item.SavedCy > 0 ? item.SavedCy : 2;
+            this.SpacingDense = !string.IsNullOrEmpty(item.SavedSpacingDense) ? item.SavedSpacingDense : "100";
+            this.SpacingSparse = !string.IsNullOrEmpty(item.SavedSpacingSparse) ? item.SavedSpacingSparse : "200";
+
+            if (item.SavedMainRebar != null) this.SelectedMainRebar = item.SavedMainRebar;
+            if (item.SavedStirrupRebar != null) this.SelectedStirrupRebar = item.SavedStirrupRebar;
+            if (item.SavedTieRebar != null) this.SelectedTieRebar = item.SavedTieRebar;
+            if (item.SavedStirrupLayout != null) this.SelectedStirrupLayout = item.SavedStirrupLayout;
+
+            // --- PHỤC HỒI HÌNH VẼ ---
+            UpdateRebarDiagram();
+
+            // A. Phục hồi Đai móc (TieType cho từng chấm đỏ)
+            if (item.SavedDotTies != null)
+            {
+                for (int i = 0; i < RebarDots.Count && i < item.SavedDotTies.Count; i++)
+                {
+                    RebarDots[i].TieType = item.SavedDotTies[i]; // Giao diện tự động vẽ nhờ OnPropertyChanged
+                }
+            }
+
+            // B. Phục hồi Đai lồng kín (Dựa vào Index đã lưu) -> BẠN ĐANG THIẾU ĐOẠN NÀY
+            _customClosedTies = new List<Tuple<RebarDot, RebarDot>>();
+            if (item.SavedCustomClosedTieIndices != null)
+            {
+                foreach (var indices in item.SavedCustomClosedTieIndices)
+                {
+                    if (indices.Item1 < RebarDots.Count && indices.Item2 < RebarDots.Count)
+                    {
+                        var dot1 = RebarDots[indices.Item1];
+                        var dot2 = RebarDots[indices.Item2];
+                        _customClosedTies.Add(new Tuple<RebarDot, RebarDot>(dot1, dot2));
+                    }
+                }
+            }
+
+            RefreshInternalTies();
+            RecalculateRebarInfo();
+            GenerateColumnPreview();
+            _isLoadingData = false;
+        }
+        // Hàm copy cấu hình qua lại cho những tầng bị bỏ qua (chưa click vào xem)
+        private void ApplyDefaultDataToItem(ColumnPreviewItem item)
+        {
+            item.SavedCx = this.Cx;
+            item.SavedCy = this.Cy;
+            item.SavedSpacingDense = this.SpacingDense;
+            item.SavedSpacingSparse = this.SpacingSparse;
+            item.SavedMainRebar = this.SelectedMainRebar;
+            item.SavedStirrupRebar = this.SelectedStirrupRebar;
+            item.SavedTieRebar = this.SelectedTieRebar;
+            item.SavedStirrupLayout = this.SelectedStirrupLayout;
+            item.IsDataLoaded = true;
+        }
+
+        // Hàm Xóa sạch thép cũ của cột để Revit không sinh ra thanh thép trùng
+        private void ClearExistingRebars(FamilyInstance column)
+        {
+            RebarHostData rebarHostData = RebarHostData.GetRebarHostData(column);
+            if (rebarHostData == null) return;
+
+            IList<Rebar> rebars = rebarHostData.GetRebarsInHost().Cast<Rebar>().ToList();
+            foreach (var r in rebars)
+            {
+                _doc.Delete(r.Id);
             }
         }
     }
