@@ -57,7 +57,9 @@ namespace ColumnRebar.ViewModels
         [ObservableProperty] private bool _isAdditionalStirrupCustom = false;
         [ObservableProperty] private double _additionalStirrupSpacing = 200;
         [ObservableProperty] private RebarHookOption _selectedAdditionalTieHook;
-
+        public ObservableCollection<TieStyleOption> AvailableTieStyles { get; set; }
+        public TieStyleOption SelectedTieStyle { get; set; }
+        public List<Tuple<RebarDot, RebarDot, int>> AdvancedClosedTies { get; set; } = new List<Tuple<RebarDot, RebarDot, int>>();
         // === THÊM MỚI 1: Biến lưu trữ Preview đang được chọn ===
         [ObservableProperty] private ColumnPreviewItem _selectedColumnPreview;
 
@@ -139,17 +141,12 @@ namespace ColumnRebar.ViewModels
 
             AvailableRebarTypes = new ObservableCollection<RebarTypeOption>(options);
         }
-
         [RelayCommand]
         private void ClearAllTies()
         {
-            _firstClickedDot = null;
-            _customClosedTies.Clear();
-            foreach (var dot in RebarDots)
-            {
-                dot.TieType = 0;
-                dot.IsSelected = false;
-            }
+            foreach (var dot in RebarDots) dot.TieType = 0;
+            AdvancedClosedTies.Clear();
+            if (_firstClickedDot != null) { _firstClickedDot.IsSelected = false; _firstClickedDot = null; }
             RefreshInternalTies();
         }
 
@@ -257,6 +254,19 @@ namespace ColumnRebar.ViewModels
                 SelectedMainTieHook = defaultHook;
                 SelectedAdditionalTieHook = defaultHook;
             }
+            AvailableTieStyles = new ObservableCollection<TieStyleOption>
+            {
+                new TieStyleOption { Id = 1, Name = "1. Đai C / Đai thẳng (1 điểm)" },
+                new TieStyleOption { Id = 2, Name = "2. Đai CN (Móc 135x135)" },
+                new TieStyleOption { Id = 3, Name = "3. Đai 2 chữ C đối nhau" },
+                new TieStyleOption { Id = 4, Name = "4. Đai CN (Dừng ở trung điểm)" },
+                new TieStyleOption { Id = 5, Name = "5. Đai CN (Móc 135x90 + 1d)" },
+                new TieStyleOption { Id = 6, Name = "6. Đai CN (Móc 135x135)" },
+                new TieStyleOption { Id = 7, Name = "7. Đai chéo kép (135x90 + 1d)" },
+                new TieStyleOption { Id = 8, Name = "8. Đai chéo kép (Móc 180x180)" }
+            };
+
+            SelectedTieStyle = AvailableTieStyles[0];
         }
 
         private void ExtractColumnDataFromRevit()
@@ -407,44 +417,42 @@ namespace ColumnRebar.ViewModels
         [RelayCommand]
         private void ToggleHook(RebarDot clickedDot)
         {
-            if (clickedDot == null || clickedDot.IsCorner) return;
+            if (clickedDot == null || clickedDot.IsCorner || SelectedTieStyle == null) return;
 
-            if (IsClosedTie)
+            if (SelectedTieStyle.Id == 1) // LOGIC CHO ITEM 1 (Click 1 điểm)
             {
-                if (_firstClickedDot == null)
+                // Xóa điểm đang chọn dở dang (nếu có)
+                if (_firstClickedDot != null) { _firstClickedDot.IsSelected = false; _firstClickedDot = null; }
+
+                // Bật/tắt trạng thái móc của điểm được click
+                clickedDot.TieType = clickedDot.TieType == 1 ? 0 : 1;
+
+                // Đồng bộ điểm đối diện
+                var oppDot = RebarDots.FirstOrDefault(d => Math.Abs(d.X - clickedDot.OppositeX) < 0.1 && Math.Abs(d.Y - clickedDot.OppositeY) < 0.1);
+                if (oppDot != null) oppDot.TieType = clickedDot.TieType;
+            }
+            else // LOGIC CHO ITEM 2 ĐẾN 8 (Click 2 điểm)
+            {
+                if (_firstClickedDot == null) // Lần click đầu tiên
                 {
                     _firstClickedDot = clickedDot;
-                    _firstClickedDot.IsSelected = true;
+                    _firstClickedDot.IsSelected = true; // Sáng màu điểm đầu tiên lên
                 }
-                else
+                else // Lần click thứ 2
                 {
                     if (_firstClickedDot != clickedDot)
                     {
-                        _customClosedTies.Add(Tuple.Create(_firstClickedDot, clickedDot));
+                        // Lưu lại cặp điểm + Id của loại thép vừa chọn
+                        AdvancedClosedTies.Add(new Tuple<RebarDot, RebarDot, int>(_firstClickedDot, clickedDot, SelectedTieStyle.Id));
                     }
 
+                    // Reset trạng thái
                     _firstClickedDot.IsSelected = false;
                     _firstClickedDot = null;
-                    RefreshInternalTies();
                 }
             }
-            else
-            {
-                if (_firstClickedDot != null) _firstClickedDot.IsSelected = false;
-                _firstClickedDot = null;
 
-                clickedDot.TieType = clickedDot.TieType == 1 ? 0 : 1;
-
-                foreach (var dot in RebarDots)
-                {
-                    if (Math.Abs(dot.X - clickedDot.OppositeX) < 0.1 && Math.Abs(dot.Y - clickedDot.OppositeY) < 0.1)
-                    {
-                        dot.TieType = clickedDot.TieType;
-                        break;
-                    }
-                }
-                RefreshInternalTies();
-            }
+            RefreshInternalTies(); // Gọi hàm vẽ UI 2D
         }
 
         private void RefreshInternalTies()
@@ -454,51 +462,130 @@ namespace ColumnRebar.ViewModels
             double tieThickness = SelectedTieRebar.DiameterMm * 0.2;
             var drawn = new HashSet<string>();
 
-            foreach (var dot in RebarDots)
+            if (RebarDots != null)
             {
-                if (dot.TieType == 1)
+                foreach (var dot in RebarDots)
                 {
-                    string key = $"HOOK_{Math.Min(dot.X, dot.OppositeX):F1}_{Math.Min(dot.Y, dot.OppositeY):F1}";
-                    if (!drawn.Contains(key))
+                    if (dot.TieType == 1)
                     {
-                        double r = (dot.Size / 2) + (tieThickness / 2) + 0.5;
-                        string path = "";
-                        if (Math.Abs(dot.X - dot.OppositeX) < 1)
+                        string key = $"HOOK_{Math.Min(dot.X, dot.OppositeX):F1}_{Math.Min(dot.Y, dot.OppositeY):F1}";
+                        if (!drawn.Contains(key))
                         {
-                            double x = dot.X; double y1 = Math.Min(dot.Y, dot.OppositeY); double y2 = Math.Max(dot.Y, dot.OppositeY);
-                            path = $"M {x + r - 4},{y1 + 4} L {x + r},{y1} A {r},{r} 0 0 0 {x - r},{y1} L {x - r},{y2} A {r},{r} 0 0 0 {x + r},{y2} L {x + r - 4},{y2 - 4}";
+                            double r = (dot.Size / 2) + (tieThickness / 2) + 0.5;
+                            string path = "";
+                            if (Math.Abs(dot.X - dot.OppositeX) < 1)
+                            {
+                                double x = dot.X; double y1 = Math.Min(dot.Y, dot.OppositeY); double y2 = Math.Max(dot.Y, dot.OppositeY);
+                                path = $"M {x + r - 4},{y1 + 4} L {x + r},{y1} A {r},{r} 0 0 0 {x - r},{y1} L {x - r},{y2} A {r},{r} 0 0 0 {x + r},{y2} L {x + r - 4},{y2 - 4}";
+                            }
+                            else
+                            {
+                                double y = dot.Y; double x1 = Math.Min(dot.X, dot.OppositeX); double x2 = Math.Max(dot.X, dot.OppositeX);
+                                path = $"M {x1 + 4},{y + r - 4} L {x1},{y + r} A {r},{r} 0 0 1 {x1},{y - r} L {x2},{y - r} A {r},{r} 0 0 1 {x2},{y + r} L {x2 - 4},{y + r - 4}";
+                            }
+                            ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                            drawn.Add(key);
                         }
-                        else
-                        {
-                            double y = dot.Y; double x1 = Math.Min(dot.X, dot.OppositeX); double x2 = Math.Max(dot.X, dot.OppositeX);
-                            path = $"M {x1 + 4},{y + r - 4} L {x1},{y + r} A {r},{r} 0 0 1 {x1},{y - r} L {x2},{y - r} A {r},{r} 0 0 1 {x2},{y + r} L {x2 - 4},{y + r - 4}";
-                        }
-                        ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
-                        drawn.Add(key);
                     }
                 }
             }
 
-            foreach (var tie in _customClosedTies)
+            if (AdvancedClosedTies != null)
             {
-                var d1 = tie.Item1;
-                var d2 = tie.Item2;
+                foreach (var tie in AdvancedClosedTies)
+                {
+                    var d1 = tie.Item1;
+                    var d2 = tie.Item2;
+                    if (d1 == null || d2 == null) continue;
 
-                double minX = Math.Min(Math.Min(d1.X, d1.OppositeX), Math.Min(d2.X, d2.OppositeX));
-                double maxX = Math.Max(Math.Max(d1.X, d1.OppositeX), Math.Max(d2.X, d2.OppositeX));
-                double minY = Math.Min(Math.Min(d1.Y, d1.OppositeY), Math.Min(d2.Y, d2.OppositeY));
-                double maxY = Math.Max(Math.Max(d1.Y, d1.OppositeY), Math.Max(d2.Y, d2.OppositeY));
+                    int tieId = tie.Item3;
+                    double r = (d1.Size / 2) + (tieThickness / 2) + 0.5;
 
-                double r = (d1.Size / 2) + (tieThickness / 2) + 0.5;
+                    double minX = Math.Min(Math.Min(d1.X, d1.OppositeX), Math.Min(d2.X, d2.OppositeX)) - r;
+                    double maxX = Math.Max(Math.Max(d1.X, d1.OppositeX), Math.Max(d2.X, d2.OppositeX)) + r;
+                    double minY = Math.Min(Math.Min(d1.Y, d1.OppositeY), Math.Min(d2.Y, d2.OppositeY)) - r;
+                    double maxY = Math.Max(Math.Max(d1.Y, d1.OppositeY), Math.Max(d2.Y, d2.OppositeY)) + r;
 
-                string path = $"M {minX + r},{minY} L {maxX - r},{minY} A {r},{r} 0 0 1 {maxX},{minY + r} L {maxX},{maxY - r} A {r},{r} 0 0 1 {maxX - r},{maxY} L {minX + r},{maxY} A {r},{r} 0 0 1 {minX},{maxY - r} L {minX},{minY + r} A {r},{r} 0 0 1 {minX + r},{minY} Z";
+                    string path = "";
+                    double hk = 10;
+                    double gap = 4; // Độ lồi ra ngoài của móc
 
-                ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                    if (tieId == 2 || tieId == 6)
+                    {
+                        path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+                        path += $" M {minX},{minY} L {minX + hk},{minY + hk}";
+                        path += $" M {minX},{minY} L {minX + hk / 2},{minY + hk + 2}";
+                    }
+                    else if (tieId == 3)
+                    {
+                        bool isHorizontal = Math.Abs(d1.X - d2.X) > Math.Abs(d1.Y - d2.Y);
+                        if (isHorizontal)
+                        {
+                            path = $"M {minX + hk},{maxY - 4} L {minX},{maxY} L {minX},{minY} L {minX + hk},{minY + 4}";
+                            ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                            path = $"M {maxX - hk},{maxY - 4} L {maxX},{maxY} L {maxX},{minY} L {maxX - hk},{minY + 4}";
+                            ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                            continue;
+                        }
+                        else
+                        {
+                            path = $"M {minX + 4},{minY + hk} L {minX},{minY} L {maxX},{minY} L {maxX - 4},{minY + hk}";
+                            ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                            path = $"M {minX + 4},{maxY - hk} L {minX},{maxY} L {maxX},{maxY} L {maxX - 4},{maxY - hk}";
+                            ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                            continue;
+                        }
+                    }
+                    else if (tieId == 4)
+                    {
+                        double midX = (minX + maxX) / 2;
+                        path = $"M {midX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} L {minX},{minY} L {midX},{minY}";
+                    }
+                    else if (tieId == 5)
+                    {
+                        path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+                        path += $" M {minX},{minY} L {minX + hk},{minY + hk}"; // 135 vào trong
+                        path += $" M {minX},{minY} L {minX - gap},{minY} L {minX - gap},{minY + hk + 5}"; // 90 bẻ xuống
+                    }
+                    else if (tieId == 7)
+                    {
+                        path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+                        // Top-Left
+                        path += $" M {minX},{minY} L {minX + hk},{minY + hk}"; // 135 In
+                        path += $" M {minX},{minY} L {minX - gap},{minY} L {minX - gap},{minY + hk + 5}"; // 90 Out Down
+                                                                                                          // Bottom-Right
+                        path += $" M {maxX},{maxY} L {maxX - hk},{maxY - hk}"; // 135 In
+                        path += $" M {maxX},{maxY} L {maxX + gap},{maxY} L {maxX + gap},{maxY - hk - 5}"; // 90 Out Up
+                    }
+                    else if (tieId == 8)
+                    {
+                        // Khung chữ nhật chính
+                        path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+
+                        double gap_out = 4; // Khoảng cách móc 90 văng ra ngoài
+                        double gap_in = 5;  // Khoảng cách móc 180 vòng vào trong
+
+                        // --- TOP-LEFT ---
+                        // 1. Móc 180 (TRONG): Đâm ngang sang phải ngay tại điểm bắt đầu, rồi cắm thẳng xuống
+                        path += $" M {minX},{minY} L {minX + gap_in},{minY} L {minX + gap_in},{minY + hk}";
+
+                        // 2. Móc 90 (NGOÀI): Đâm ngang sang trái, rồi cắm thẳng xuống
+                        path += $" M {minX},{minY} L {minX - gap_out},{minY} L {minX - gap_out},{minY + hk + 5}";
+
+                        // --- BOTTOM-RIGHT ---
+                        // 1. Móc 180 (TRONG): Đâm ngang sang trái ngay tại điểm bắt đầu, rồi đâm thẳng lên
+                        path += $" M {maxX},{maxY} L {maxX - gap_in},{maxY} L {maxX - gap_in},{maxY - hk}";
+
+                        // 2. Móc 90 (NGOÀI): Đâm ngang sang phải, rồi đâm thẳng lên
+                        path += $" M {maxX},{maxY} L {maxX + gap_out},{maxY} L {maxX + gap_out},{maxY - hk - 5}";
+                    }
+
+                    if (tieId != 3) ties.Add(new RebarLine { PathData = path, Thickness = tieThickness });
+                }
             }
 
             InternalTies = new ObservableCollection<RebarLine>(ties);
         }
-
         private void RecalculateRebarInfo()
         {
             if (SelectedMainRebar == null) return;
@@ -601,303 +688,368 @@ namespace ColumnRebar.ViewModels
                                            System.Windows.MessageBoxButton.OK,
                                            System.Windows.MessageBoxImage.Information);
         }
+
+        
         [RelayCommand]
         private void Run(System.Windows.Window window)
         {
-            // ===============================================
-            // BƯỚC QUAN TRỌNG NHẤT: Lưu ngay giao diện đang hiển thị vào bộ nhớ
-            // (Đảm bảo số liệu bạn vừa sửa không bị mất trước khi chạy)
-            // ===============================================
-            if (SelectedColumnPreview != null)
+            if (SelectedColumns == null || !SelectedColumns.Any())
             {
-                SaveCurrentUiStateToModel(SelectedColumnPreview);
+                System.Windows.MessageBox.Show("Vui lòng chọn cột trước khi chạy!");
+                return;
             }
+
+            if (SelectedColumnPreview != null) SaveCurrentUiStateToModel(SelectedColumnPreview);
+
+            System.Text.StringBuilder errorLog = new System.Text.StringBuilder();
 
             using (Transaction t = new Transaction(_doc, "Vẽ thép cột toàn diện"))
             {
                 t.Start();
+                var currentDisplayItem = SelectedColumnPreview;
+
                 try
                 {
-                    // (Phần tạo Hook giữ nguyên của bạn)
                     string mainHookName = SelectedMainTieHook != null ? SelectedMainTieHook.Name : "135";
-                    string addHookName = SelectedAdditionalTieHook != null ? SelectedAdditionalTieHook.Name : mainHookName;
 
-                    RebarHookType mainStirrupHook = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
-                        .FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && h.Name == mainHookName)
-                        ?? new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>().FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && (h.Name.Contains("135") || h.Name.Contains("Seismic")))
+                    RebarHookType hook135 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
+                        .FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && ((h.Name != null && h.Name == mainHookName) || (h.Name != null && h.Name.Contains("135")) || Math.Abs(h.HookAngle - 2.356) < 0.01))
                         ?? new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>().FirstOrDefault(h => h.Style == RebarStyle.StirrupTie);
 
-                    RebarHookType addStirrupHook = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
-                        .FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && h.Name == addHookName) ?? mainStirrupHook;
-
-                    double targetAngleRad = addHookName.Contains("135") ? (135.0 * Math.PI / 180.0) :
-                                             addHookName.Contains("180") ? (180.0 * Math.PI / 180.0) : (90.0 * Math.PI / 180.0);
-
-                    RebarHookType addStandardHook = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
-                        .FirstOrDefault(h => h.Style == RebarStyle.Standard && Math.Abs(h.HookAngle - targetAngleRad) < 0.01);
-
-                    if (addStandardHook == null)
+                    if (hook135 == null)
                     {
-                        RebarHookType baseStandardHook = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
-                            .FirstOrDefault(h => h.Style == RebarStyle.Standard);
-
-                        if (baseStandardHook != null)
-                        {
-                            try
-                            {
-                                string newHookName = $"Standard - {(int)(targetAngleRad * 180.0 / Math.PI)} deg (Auto)";
-                                addStandardHook = baseStandardHook.Duplicate(newHookName) as RebarHookType;
-                                Parameter angleParam = addStandardHook.get_Parameter(BuiltInParameter.REBAR_HOOK_ANGLE);
-                                if (angleParam != null && !angleParam.IsReadOnly) angleParam.Set(targetAngleRad);
-                            }
-                            catch { addStandardHook = baseStandardHook; }
-                        }
+                        System.Windows.MessageBox.Show("Dự án chưa load Family móc thép đai kiểu StirrupTie!", "Lỗi", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                        t.RollBack(); return;
                     }
 
-                    // ===============================================
-                    // SỬA LỖI ĐA TẦNG: Bắt buộc quét qua TẤT CẢ các cột
-                    // ===============================================
-                    List<FamilyInstance> columnsToRun = SelectedColumns;
-                    var currentDisplayItem = SelectedColumnPreview; // Nhớ lại tầng đang xem để tí trả về
+                    RebarHookType hook90 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
+                        .FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && ((h.Name != null && h.Name.Contains("90")) || Math.Abs(h.HookAngle - 1.57) < 0.01)) ?? hook135;
+
+                    RebarHookType hook180 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
+                        .FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && ((h.Name != null && h.Name.Contains("180")) || Math.Abs(h.HookAngle - 3.14) < 0.01)) ?? hook135;
+
+                    RebarHookType standardHook135 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
+                        .FirstOrDefault(h => h.Style == RebarStyle.Standard && ((h.Name != null && h.Name.Contains("135")) || Math.Abs(h.HookAngle - 2.356) < 0.01))
+                        ?? new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>().FirstOrDefault(h => h.Style == RebarStyle.Standard);
+
+                    var columnsToRun = SelectedColumns.ToList();
 
                     foreach (var col in columnsToRun)
                     {
-                        // ---- ĐOẠN MA THUẬT: Đổi setting giao diện theo đúng tầng đang chuẩn bị vẽ ----
-                        var previewItem = ColumnPreviews.FirstOrDefault(p => p.ColumnId == col.Id);
-                        if (previewItem != null)
+                        if (col == null || !col.IsValidObject) continue;
+
+                        try
                         {
-                            // Nếu tầng nào người dùng chưa click vào -> Đắp tạm dữ liệu của tầng hiện tại sang
-                            if (!previewItem.IsDataLoaded)
+                            var previewItem = ColumnPreviews?.FirstOrDefault(p => p.ColumnId == col.Id);
+                            if (previewItem != null)
                             {
-                                ApplyDefaultDataToItem(previewItem);
+                                if (!previewItem.IsDataLoaded) ApplyDefaultDataToItem(previewItem);
+                                try { LoadDataForSelectedColumn(previewItem); } catch { }
                             }
 
-                            // Ép giao diện thay đổi sang thông số của Tầng này (Cx, Cy, RebarDots...)
-                            LoadDataForSelectedColumn(previewItem);
-                        }
+                            ClearExistingRebars(col);
 
-                        // ===============================================
-                        // BƯỚC QUAN TRỌNG: Xoá thép cũ của cột này trước khi vẽ
-                        // Nếu không có hàm này, mỗi lần Run Revit sẽ đẻ thêm 1 đống thép trùng nhau
-                        // ===============================================
-                        ClearExistingRebars(col);
+                            if (SelectedMainRebar == null || SelectedStirrupRebar == null || SelectedTieRebar == null) continue;
 
-                        // CHUẨN BỊ DỮ LIỆU TỪ UI (Lúc này UI đã biến thành thông số của tầng tương ứng)
-                        RebarBarType mainBarType = _doc.GetElement(SelectedMainRebar.Id) as RebarBarType;
-                        RebarBarType stirrupBarType = _doc.GetElement(SelectedStirrupRebar.Id) as RebarBarType;
-                        RebarBarType tieBarType = _doc.GetElement(SelectedTieRebar.Id) as RebarBarType;
+                            RebarBarType mainBarType = _doc.GetElement(SelectedMainRebar.Id) as RebarBarType;
+                            RebarBarType stirrupBarType = _doc.GetElement(SelectedStirrupRebar.Id) as RebarBarType;
+                            RebarBarType tieBarType = _doc.GetElement(SelectedTieRebar.Id) as RebarBarType;
 
-                        double.TryParse(TopCover, out double topCoverMm);
-                        double.TryParse(OtherCover, out double otherCoverMm);
-                        double.TryParse(BeamDepth, out double beamDepthMm);
+                            if (mainBarType == null || stirrupBarType == null || tieBarType == null) continue;
 
-                        double topCoverFeet = topCoverMm / 304.8;
-                        double otherCoverFeet = otherCoverMm / 304.8;
-                        double beamDepthFeet = beamDepthMm / 304.8;
+                            BoundingBoxXYZ bb = col.get_BoundingBox(null);
+                            if (bb == null) continue;
 
-                        BoundingBoxXYZ bb = col.get_BoundingBox(null);
-                        double minZ = bb.Min.Z + (StirrupOffset / 304.8);
-                        double maxZ_BeamBottom = bb.Max.Z - beamDepthFeet;
-                        double maxZ_MainRebar = bb.Max.Z - topCoverFeet;
+                            double.TryParse(TopCover, out double topCoverMm);
+                            double.TryParse(OtherCover, out double otherCoverMm);
+                            double.TryParse(BeamDepth, out double beamDepthMm);
 
-                        double mainBarRadius = mainBarType.BarModelDiameter / 2.0;
-                        double stirrupDiameter = stirrupBarType.BarModelDiameter;
+                            double topCoverFeet = topCoverMm / 304.8;
+                            double otherCoverFeet = otherCoverMm / 304.8;
+                            double beamDepthFeet = beamDepthMm / 304.8;
 
-                        double offsetRev = otherCoverFeet + stirrupDiameter + mainBarRadius;
-                        double spanX_Rev = (bb.Max.X - bb.Min.X) - 2 * offsetRev;
-                        double spanY_Rev = (bb.Max.Y - bb.Min.Y) - 2 * offsetRev;
+                            double minZ = bb.Min.Z + (StirrupOffset / 304.8);
+                            double maxZ_BeamBottom = bb.Max.Z - beamDepthFeet;
+                            double maxZ_MainRebar = bb.Max.Z - topCoverFeet;
 
-                        // 2. THUẬT TOÁN ÁNH XẠ UI -> REVIT 
-                        double dotSizeUI = SelectedMainRebar.DiameterMm * 0.6;
-                        if (dotSizeUI < 6) dotSizeUI = 6; if (dotSizeUI > 20) dotSizeUI = 20;
-                        double offsetUI = dotSizeUI / 2;
-                        double spanX_UI = 240 - 2 * offsetUI;
-                        double spanY_UI = 100 - 2 * offsetUI;
+                            double mainBarRadius = mainBarType.BarModelDiameter / 2.0;
+                            double stirrupDiameter = stirrupBarType.BarModelDiameter;
 
-                        bool isSwapped = spanY_Rev > spanX_Rev;
+                            double offsetRev = otherCoverFeet + stirrupDiameter + mainBarRadius;
+                            double spanX_Rev = (bb.Max.X - bb.Min.X) - 2 * offsetRev;
+                            double spanY_Rev = (bb.Max.Y - bb.Min.Y) - 2 * offsetRev;
 
-                        Func<double, double, XYZ> GetRevitPt = (uiX, uiY) =>
-                        {
-                            double ratioX = (uiX - offsetUI) / spanX_UI;
-                            double ratioY = (uiY - offsetUI) / spanY_UI;
+                            if (spanX_Rev < 0.2 || spanY_Rev < 0.2) continue;
 
-                            double px, py;
-                            if (!isSwapped)
+                            double dotSizeUI = SelectedMainRebar.DiameterMm * 0.6;
+                            if (dotSizeUI < 6) dotSizeUI = 6; if (dotSizeUI > 20) dotSizeUI = 20;
+                            double offsetUI = dotSizeUI / 2;
+                            double spanX_UI = 240 - 2 * offsetUI;
+                            double spanY_UI = 100 - 2 * offsetUI;
+                            bool isSwapped = spanY_Rev > spanX_Rev;
+
+                            Func<double, double, XYZ> GetRevitPt = (uiX, uiY) =>
                             {
-                                px = bb.Min.X + offsetRev + ratioX * spanX_Rev;
-                                py = bb.Min.Y + offsetRev + ratioY * spanY_Rev;
-                            }
-                            else
-                            {
-                                px = bb.Min.X + offsetRev + ratioY * spanX_Rev;
-                                py = bb.Min.Y + offsetRev + ratioX * spanY_Rev;
-                            }
-                            return new XYZ(px, py, 0);
-                        };
-
-                        // 3. TẠO THÉP CHỦ
-                        var drawnMainBars = new HashSet<string>();
-                        foreach (var dot in RebarDots)
-                        {
-                            string key = $"{dot.X:F1}_{dot.Y:F1}";
-                            if (!drawnMainBars.Contains(key))
-                            {
-                                XYZ pt = GetRevitPt(dot.X, dot.Y);
-                                Line mainBarLine = Line.CreateBound(new XYZ(pt.X, pt.Y, minZ), new XYZ(pt.X, pt.Y, maxZ_MainRebar));
-                                Rebar.CreateFromCurves(_doc, RebarStyle.Standard, mainBarType, null, null, col, XYZ.BasisX, new List<Curve> { mainBarLine }, RebarHookOrientation.Right, RebarHookOrientation.Right, true, true);
-                                drawnMainBars.Add(key);
-                            }
-                        }
-
-                        // 4. HÀM TẠO MẢNG THÉP ĐAI LÕI
-                        double sDense = 100.0 / 304.8;
-                        if (double.TryParse(SpacingDense, out double sd) && sd > 0) sDense = sd / 304.8;
-                        double sSparse = 200.0 / 304.8;
-                        if (double.TryParse(SpacingSparse, out double ss) && ss > 0) sSparse = ss / 304.8;
-
-                        double clearHeight = maxZ_BeamBottom - minZ;
-                        double lOver4 = clearHeight / 4.0;
-
-                        Action<List<Curve>, double, double, double, RebarBarType, RebarStyle, RebarHookType, RebarHookOrientation, RebarHookOrientation> CreateStirrupArray =
-                            (profile, startZ, endZ, spacing, barType, style, hook, startOrient, endOrient) =>
-                            {
-                                if (endZ - startZ < 0.1 || profile == null || profile.Count == 0) return;
-                                List<Curve> shiftedProfile = profile.Select(c => c.CreateTransformed(Transform.CreateTranslation(new XYZ(0, 0, startZ)))).ToList();
-
-                                try
-                                {
-                                    Rebar stirrup = Rebar.CreateFromCurves(_doc, style, barType, hook, hook, col, XYZ.BasisZ, shiftedProfile, startOrient, endOrient, true, true);
-                                    if (stirrup != null)
-                                    {
-                                        stirrup.GetShapeDrivenAccessor().SetLayoutAsMaximumSpacing(spacing, endZ - startZ, true, true, true);
-                                    }
-                                }
-                                catch { }
+                                double ratioX = (uiX - offsetUI) / spanX_UI;
+                                double ratioY = (uiY - offsetUI) / spanY_UI;
+                                double px = !isSwapped ? bb.Min.X + offsetRev + ratioX * spanX_Rev : bb.Min.X + offsetRev + ratioY * spanX_Rev;
+                                double py = !isSwapped ? bb.Min.Y + offsetRev + ratioY * spanY_Rev : bb.Min.Y + offsetRev + ratioX * spanY_Rev;
+                                return new XYZ(px, py, 0);
                             };
 
-                        Action<List<Curve>, RebarBarType, RebarStyle, RebarHookType, RebarHookOrientation, RebarHookOrientation, bool> ProcessProfileZones =
-                            (profile, barType, style, hook, startOrient, endOrient, isAdditionalTie) =>
+                            var safeRebarDots = RebarDots?.ToList();
+                            var safeAdvancedClosedTies = AdvancedClosedTies?.ToList();
+
+                            var drawnMainBars = new HashSet<string>();
+                            if (safeRebarDots != null)
                             {
-                                if (isAdditionalTie && IsAdditionalStirrupCustom)
+                                foreach (var dot in safeRebarDots)
                                 {
-                                    double customSpc = AdditionalStirrupSpacing / 304.8;
-                                    if (customSpc <= 0) customSpc = sDense;
-                                    CreateStirrupArray(profile, minZ, maxZ_BeamBottom, customSpc, barType, style, hook, startOrient, endOrient);
-                                }
-                                else
-                                {
-                                    string layout = SelectedStirrupLayout?.Name ?? "";
-                                    if (layout.Contains("L1, L2, L1"))
+                                    if (dot == null) continue;
+                                    string key = $"{dot.X:F1}_{dot.Y:F1}";
+                                    if (!drawnMainBars.Contains(key))
                                     {
-                                        CreateStirrupArray(profile, minZ, minZ + lOver4, sDense, barType, style, hook, startOrient, endOrient);
-                                        CreateStirrupArray(profile, minZ + lOver4, maxZ_BeamBottom - lOver4, sSparse, barType, style, hook, startOrient, endOrient);
-                                        CreateStirrupArray(profile, maxZ_BeamBottom - lOver4, maxZ_BeamBottom, sDense, barType, style, hook, startOrient, endOrient);
+                                        XYZ pt = GetRevitPt(dot.X, dot.Y);
+                                        Line mainBarLine = Line.CreateBound(new XYZ(pt.X, pt.Y, minZ), new XYZ(pt.X, pt.Y, maxZ_MainRebar));
+                                        Rebar.CreateFromCurves(_doc, RebarStyle.Standard, mainBarType, null, null, col, XYZ.BasisX, new List<Curve> { mainBarLine }, RebarHookOrientation.Right, RebarHookOrientation.Right, true, true);
+                                        drawnMainBars.Add(key);
                                     }
-                                    else if (layout == "L1")
+                                }
+                            }
+
+                            double sDense = 100.0 / 304.8;
+                            if (double.TryParse(SpacingDense, out double sd) && sd > 0) sDense = sd / 304.8;
+                            double sSparse = 200.0 / 304.8;
+                            if (double.TryParse(SpacingSparse, out double ss) && ss > 0) sSparse = ss / 304.8;
+                            double clearHeight = maxZ_BeamBottom - minZ;
+                            double lOver4 = clearHeight / 4.0;
+
+                            Action<string, List<Curve>, double, double, double, RebarBarType, RebarStyle, RebarHookType, RebarHookType, RebarHookOrientation, RebarHookOrientation> CreateStirrupArray =
+                                (itemName, profile, startZ, endZ, spacing, barType, style, startHk, endHk, startOrient, endOrient) =>
+                                {
+                                    if (barType == null || profile == null || profile.Count == 0 || endZ - startZ < 0.1) return;
+                                    List<Curve> shiftedProfile = profile.Select(c => c.CreateTransformed(Transform.CreateTranslation(new XYZ(0, 0, startZ)))).ToList();
+
+                                    RebarHookType sHk = (startHk != null && startHk.Style == style) ? startHk : null;
+                                    RebarHookType eHk = (endHk != null && endHk.Style == style) ? endHk : null;
+                                    if (style == RebarStyle.StirrupTie && (sHk == null || eHk == null)) style = RebarStyle.Standard;
+
+                                    try
                                     {
-                                        CreateStirrupArray(profile, minZ, maxZ_BeamBottom, sSparse, barType, style, hook, startOrient, endOrient);
+                                        Rebar stirrup = Rebar.CreateFromCurves(_doc, style, barType, sHk, eHk, col, XYZ.BasisZ, shiftedProfile, startOrient, endOrient, true, true);
+                                        if (stirrup != null) stirrup.GetShapeDrivenAccessor().SetLayoutAsMaximumSpacing(spacing, endZ - startZ, true, true, true);
+                                    }
+                                    catch (Exception ex1)
+                                    {
+                                        try
+                                        {
+                                            Rebar stirrup = Rebar.CreateFromCurves(_doc, RebarStyle.Standard, barType, null, null, col, XYZ.BasisZ, shiftedProfile, RebarHookOrientation.Left, RebarHookOrientation.Left, true, true);
+                                            if (stirrup != null) stirrup.GetShapeDrivenAccessor().SetLayoutAsMaximumSpacing(spacing, endZ - startZ, true, true, true);
+                                        }
+                                        catch (Exception) { errorLog.AppendLine($"[{itemName}] Hình học không hợp lệ: {ex1.Message}"); }
+                                    }
+                                };
+
+                            Action<string, List<Curve>, RebarBarType, RebarStyle, RebarHookType, RebarHookType, RebarHookOrientation, RebarHookOrientation, bool> ProcessProfileZones =
+                                (itemName, profile, barType, style, startHk, endHk, startOrient, endOrient, isAdditionalTie) =>
+                                {
+                                    if (isAdditionalTie && IsAdditionalStirrupCustom)
+                                    {
+                                        double customSpc = AdditionalStirrupSpacing / 304.8;
+                                        if (customSpc <= 0) customSpc = sDense;
+                                        CreateStirrupArray(itemName, profile, minZ, maxZ_BeamBottom, customSpc, barType, style, startHk, endHk, startOrient, endOrient);
                                     }
                                     else
                                     {
-                                        CreateStirrupArray(profile, minZ, maxZ_BeamBottom - lOver4, sSparse, barType, style, hook, startOrient, endOrient);
-                                        CreateStirrupArray(profile, maxZ_BeamBottom - lOver4, maxZ_BeamBottom, sDense, barType, style, hook, startOrient, endOrient);
+                                        string layout = SelectedStirrupLayout?.Name ?? "";
+                                        if (layout.Contains("L1, L2, L1"))
+                                        {
+                                            CreateStirrupArray(itemName, profile, minZ, minZ + lOver4, sDense, barType, style, startHk, endHk, startOrient, endOrient);
+                                            CreateStirrupArray(itemName, profile, minZ + lOver4, maxZ_BeamBottom - lOver4, sSparse, barType, style, startHk, endHk, startOrient, endOrient);
+                                            CreateStirrupArray(itemName, profile, maxZ_BeamBottom - lOver4, maxZ_BeamBottom, sDense, barType, style, startHk, endHk, startOrient, endOrient);
+                                        }
+                                        else if (layout == "L1")
+                                        {
+                                            CreateStirrupArray(itemName, profile, minZ, maxZ_BeamBottom, sSparse, barType, style, startHk, endHk, startOrient, endOrient);
+                                        }
+                                        else
+                                        {
+                                            CreateStirrupArray(itemName, profile, minZ, maxZ_BeamBottom - lOver4, sSparse, barType, style, startHk, endHk, startOrient, endOrient);
+                                            CreateStirrupArray(itemName, profile, maxZ_BeamBottom - lOver4, maxZ_BeamBottom, sDense, barType, style, startHk, endHk, startOrient, endOrient);
+                                        }
                                     }
-                                }
+                                };
 
-                                if (IsStirrupToSlabTop)
+                            double tieExt = mainBarRadius + (tieBarType.BarModelDiameter / 2.0);
+                            double stirrupExt = mainBarRadius + (stirrupBarType.BarModelDiameter / 2.0);
+                            XYZ p1 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
+                            XYZ p2 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
+                            XYZ p3 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Max.Y - offsetRev + stirrupExt, 0);
+                            XYZ p4 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Max.Y - offsetRev + stirrupExt, 0);
+                            List<Curve> outerProfile = new List<Curve> { Line.CreateBound(p1, p2), Line.CreateBound(p2, p3), Line.CreateBound(p3, p4), Line.CreateBound(p4, p1) };
+
+                            ProcessProfileZones("Đai chính", outerProfile, stirrupBarType, RebarStyle.StirrupTie, hook135, hook135, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
+
+                            var drawnHooks = new HashSet<string>();
+                            if (safeRebarDots != null)
+                            {
+                                foreach (var dot in safeRebarDots)
                                 {
-                                    double jointHeight = maxZ_MainRebar - maxZ_BeamBottom;
-                                    if (jointHeight > 0)
+                                    if (dot == null) continue;
+                                    if (dot.TieType == 1)
                                     {
-                                        double sSeismic = SeismicSpacing / 304.8;
-                                        if (IsSeismicByQuantity && SeismicQuantity > 0) sSeismic = jointHeight / (SeismicQuantity + 1);
-                                        CreateStirrupArray(profile, maxZ_BeamBottom, maxZ_MainRebar, sSeismic, barType, style, hook, startOrient, endOrient);
+                                        string key = $"{Math.Min(dot.X, dot.OppositeX):F1}_{Math.Min(dot.Y, dot.OppositeY):F1}";
+                                        if (!drawnHooks.Contains(key))
+                                        {
+                                            XYZ pt1_s = GetRevitPt(dot.X, dot.Y);
+                                            XYZ pt2_s = GetRevitPt(dot.OppositeX, dot.OppositeY);
+
+                                            if (pt1_s.DistanceTo(pt2_s) < 0.1) continue;
+
+                                            XYZ dir = (pt2_s - pt1_s).Normalize();
+                                            XYZ perpLeft = XYZ.BasisZ.CrossProduct(dir).Normalize();
+
+                                            XYZ extPt1 = pt1_s + perpLeft * tieExt - dir * mainBarRadius;
+                                            XYZ extPt2 = pt2_s + perpLeft * tieExt + dir * mainBarRadius;
+
+                                            List<Curve> hookProfile = new List<Curve> { Line.CreateBound(extPt1, extPt2) };
+                                            ProcessProfileZones("Item 1", hookProfile, tieBarType, RebarStyle.Standard, standardHook135, standardHook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                            drawnHooks.Add(key);
+                                        }
                                     }
                                 }
-                            };
+                            }
 
-                        // 5. VẼ ĐAI BAO NGOÀI
-                        double stirrupExt = mainBarRadius + (stirrupBarType.BarModelDiameter / 2.0);
-                        XYZ p1 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
-                        XYZ p2 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
-                        XYZ p3 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Max.Y - offsetRev + stirrupExt, 0);
-                        XYZ p4 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Max.Y - offsetRev + stirrupExt, 0);
-                        List<Curve> outerProfile = new List<Curve> { Line.CreateBound(p1, p2), Line.CreateBound(p2, p3), Line.CreateBound(p3, p4), Line.CreateBound(p4, p1) };
-
-                        ProcessProfileZones(outerProfile, stirrupBarType, RebarStyle.StirrupTie, mainStirrupHook, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
-
-                        // 6. VẼ ĐAI PHỤ BÊN TRONG 
-                        double tieExt = mainBarRadius + (tieBarType.BarModelDiameter / 2.0);
-
-                        var drawnHooks = new HashSet<string>();
-                        foreach (var dot in RebarDots)
-                        {
-                            if (dot.TieType == 1)
+                            if (safeAdvancedClosedTies != null)
                             {
-                                string key = $"{Math.Min(dot.X, dot.OppositeX):F1}_{Math.Min(dot.Y, dot.OppositeY):F1}";
-                                if (!drawnHooks.Contains(key))
+                                foreach (var tie in safeAdvancedClosedTies)
                                 {
-                                    XYZ pt1 = GetRevitPt(dot.X, dot.Y);
-                                    XYZ pt2 = GetRevitPt(dot.OppositeX, dot.OppositeY);
+                                    if (tie == null || tie.Item1 == null || tie.Item2 == null) continue;
 
-                                    XYZ dir = (pt2 - pt1).Normalize();
-                                    XYZ perpLeft = XYZ.BasisZ.CrossProduct(dir).Normalize();
+                                    XYZ ptA = GetRevitPt(tie.Item1.X, tie.Item1.Y);
+                                    XYZ ptA_opp = GetRevitPt(tie.Item1.OppositeX, tie.Item1.OppositeY);
+                                    XYZ ptB = GetRevitPt(tie.Item2.X, tie.Item2.Y);
+                                    XYZ ptB_opp = GetRevitPt(tie.Item2.OppositeX, tie.Item2.OppositeY);
 
-                                    XYZ offsetPt1 = pt1 + perpLeft * tieExt;
-                                    XYZ offsetPt2 = pt2 + perpLeft * tieExt;
+                                    int tieId = tie.Item3;
 
-                                    XYZ extPt1 = offsetPt1 - dir * mainBarRadius;
-                                    XYZ extPt2 = offsetPt2 + dir * mainBarRadius;
+                                    double minX = Math.Min(Math.Min(ptA.X, ptA_opp.X), Math.Min(ptB.X, ptB_opp.X)) - tieExt;
+                                    double maxX = Math.Max(Math.Max(ptA.X, ptA_opp.X), Math.Max(ptB.X, ptB_opp.X)) + tieExt;
+                                    double minY = Math.Min(Math.Min(ptA.Y, ptA_opp.Y), Math.Min(ptB.Y, ptB_opp.Y)) - tieExt;
+                                    double maxY = Math.Max(Math.Max(ptA.Y, ptA_opp.Y), Math.Max(ptB.Y, ptB_opp.Y)) + tieExt;
 
-                                    List<Curve> hookProfile = new List<Curve> { Line.CreateBound(extPt1, extPt2) };
+                                    if (maxX - minX < 0.1 || maxY - minY < 0.1) continue;
 
-                                    ProcessProfileZones(hookProfile, tieBarType, RebarStyle.Standard, addStandardHook, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
-                                    drawnHooks.Add(key);
+                                    XYZ c1 = new XYZ(minX, minY, 0);
+                                    XYZ c2 = new XYZ(maxX, minY, 0);
+                                    XYZ c3 = new XYZ(maxX, maxY, 0);
+                                    XYZ c4 = new XYZ(minX, maxY, 0);
+
+                                    List<Curve> rectProfile = new List<Curve> { Line.CreateBound(c1, c2), Line.CreateBound(c2, c3), Line.CreateBound(c3, c4), Line.CreateBound(c4, c1) };
+
+                                    if (tieId == 2)
+                                    {
+                                        ProcessProfileZones("Item 2", rectProfile, tieBarType, RebarStyle.StirrupTie, hook135, hook135, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                    }
+                                    else if (tieId == 3)
+                                    {
+                                        bool isHorizontal = Math.Abs(ptA.X - ptB.X) > Math.Abs(ptA.Y - ptB.Y);
+                                        if (isHorizontal)
+                                        {
+                                            // Vẽ cLeft từ Trên (c4) xuống Dưới (c1) -> Móc Right bẻ vào trong
+                                            List<Curve> cLeft = new List<Curve> { Line.CreateBound(c4, c1) };
+
+                                            // SỬA LỖI: Vẽ cRight ngược lại từ Dưới (c2) lên Trên (c3) -> Móc Right bẻ vào trong
+                                            List<Curve> cRight = new List<Curve> { Line.CreateBound(c2, c3) };
+
+                                            ProcessProfileZones("Item 3 Trái", cLeft, tieBarType, RebarStyle.Standard, standardHook135, standardHook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                            ProcessProfileZones("Item 3 Phải", cRight, tieBarType, RebarStyle.Standard, standardHook135, standardHook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                        }
+                                        else
+                                        {
+                                            // SỬA LỖI: Vẽ cTop từ Trái (c4) sang Phải (c3) -> Móc Right bẻ vào trong
+                                            List<Curve> cTop = new List<Curve> { Line.CreateBound(c4, c3) };
+
+                                            // Vẽ cBottom từ Phải (c2) sang Trái (c1) -> Móc Right bẻ vào trong
+                                            List<Curve> cBottom = new List<Curve> { Line.CreateBound(c2, c1) };
+
+                                            ProcessProfileZones("Item 3 Trên", cTop, tieBarType, RebarStyle.Standard, standardHook135, standardHook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                            ProcessProfileZones("Item 3 Dưới", cBottom, tieBarType, RebarStyle.Standard, standardHook135, standardHook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                        }
+                                    }
+                                    else if (tieId == 4)
+                                    {
+                                        XYZ mTop = (c4 + c3) / 2;
+                                        List<Curve> profileMid = new List<Curve> { Line.CreateBound(mTop, c4), Line.CreateBound(c4, c1), Line.CreateBound(c1, c2), Line.CreateBound(c2, c3), Line.CreateBound(c3, mTop) };
+                                        ProcessProfileZones("Item 4", profileMid, tieBarType, RebarStyle.Standard, null, null, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                    }
+                                    else if (tieId == 5)
+                                    {
+                                        // SỬA LỖI: Đổi Right thành Left để móc 90 đâm vào trong lõi cột
+                                        ProcessProfileZones("Item 5", rectProfile, tieBarType, RebarStyle.StirrupTie, hook135, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                    }
+                                    else if (tieId == 6)
+                                    {
+                                        bool isHorizontal = Math.Abs(ptA.X - ptB.X) > Math.Abs(ptA.Y - ptB.Y);
+                                        List<Curve> profileMid;
+                                        if (isHorizontal)
+                                        {
+                                            XYZ mTop = (c4 + c3) / 2;
+                                            profileMid = new List<Curve> { Line.CreateBound(mTop, c4), Line.CreateBound(c4, c1), Line.CreateBound(c1, c2), Line.CreateBound(c2, c3), Line.CreateBound(c3, mTop) };
+                                        }
+                                        else
+                                        {
+                                            XYZ mRight = (c3 + c2) / 2;
+                                            profileMid = new List<Curve> { Line.CreateBound(mRight, c3), Line.CreateBound(c3, c4), Line.CreateBound(c4, c1), Line.CreateBound(c1, c2), Line.CreateBound(c2, mRight) };
+                                        }
+                                        ProcessProfileZones("Item 6", profileMid, tieBarType, RebarStyle.StirrupTie, hook135, hook135, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                    }
+                                    else if (tieId == 7)
+                                    {
+                                        List<Curve> rectReverse = new List<Curve> { Line.CreateBound(c3, c2), Line.CreateBound(c2, c1), Line.CreateBound(c1, c4), Line.CreateBound(c4, c3) };
+                                        // SỬA LỖI: Đổi Right thành Left cho móc 90
+                                        ProcessProfileZones("Item 7", rectProfile, tieBarType, RebarStyle.StirrupTie, hook135, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                        ProcessProfileZones("Item 7 Đảo", rectReverse, tieBarType, RebarStyle.StirrupTie, hook135, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                    }
+                                    else if (tieId == 8)
+                                    {
+                                        List<Curve> rectReverse = new List<Curve> { Line.CreateBound(c3, c2), Line.CreateBound(c2, c1), Line.CreateBound(c1, c4), Line.CreateBound(c4, c3) };
+                                        // SỬA LỖI: Đổi Right thành Left cho móc 90
+                                        ProcessProfileZones("Item 8", rectProfile, tieBarType, RebarStyle.StirrupTie, hook180, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                        ProcessProfileZones("Item 8 Đảo", rectReverse, tieBarType, RebarStyle.StirrupTie, hook180, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                    }
                                 }
                             }
                         }
-
-                        if (_customClosedTies != null)
+                        catch (Exception colEx)
                         {
-                            foreach (var tie in _customClosedTies)
-                            {
-                                XYZ pt1 = GetRevitPt(tie.Item1.X, tie.Item1.Y);
-                                XYZ pt2 = GetRevitPt(tie.Item2.X, tie.Item2.Y);
-
-                                double minX = Math.Min(pt1.X, pt2.X) - tieExt;
-                                double maxX = Math.Max(pt1.X, pt2.X) + tieExt;
-                                double minY = Math.Min(pt1.Y, pt2.Y) - tieExt;
-                                double maxY = Math.Max(pt1.Y, pt2.Y) + tieExt;
-
-                                XYZ c1 = new XYZ(minX, minY, 0); XYZ c2 = new XYZ(maxX, minY, 0);
-                                XYZ c3 = new XYZ(maxX, maxY, 0); XYZ c4 = new XYZ(minX, maxY, 0);
-
-                                if (Math.Abs(maxX - minX) > 0.01 && Math.Abs(maxY - minY) > 0.01)
-                                {
-                                    List<Curve> closedProfile = new List<Curve> { Line.CreateBound(c1, c2), Line.CreateBound(c2, c3), Line.CreateBound(c3, c4), Line.CreateBound(c4, c1) };
-                                    ProcessProfileZones(closedProfile, tieBarType, RebarStyle.StirrupTie, addStirrupHook, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
-                                }
-                            }
+                            errorLog.AppendLine($"Lỗi ngoại lệ tại cột {col.Id}:\n{colEx.Message}");
                         }
-                    } // Hết vòng lặp Foreach
-
-                    // Trả lại diện mạo ban đầu cho người dùng sau khi chạy xong
-                    if (currentDisplayItem != null)
-                    {
-                        LoadDataForSelectedColumn(currentDisplayItem);
                     }
 
                     t.Commit();
                     if (window != null) window.Close();
+
+                    if (errorLog.Length > 0)
+                    {
+                        System.Windows.MessageBox.Show("Cảnh báo:\n" + errorLog.ToString(), "Báo cáo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                    }
                 }
                 catch (Exception ex)
                 {
                     t.RollBack();
-                    System.Windows.MessageBox.Show("Lỗi khi vẽ thép: " + ex.Message);
+                    System.Windows.MessageBox.Show("Lỗi hệ thống: " + ex.Message);
+                }
+                finally
+                {
+                    if (currentDisplayItem != null)
+                    {
+                        try { LoadDataForSelectedColumn(currentDisplayItem); } catch { }
+                        // ĐÃ XÓA SẠCH LỆNH ÉP CẬP NHẬT UI ĐỂ CHỐNG SẬP
+                    }
                 }
             }
         }
-        // === HÀM LƯU DỮ LIỆU TỪ GIAO DIỆN VÀO TẦNG CŨ ===
         private void SaveCurrentUiStateToModel(ColumnPreviewItem item)
         {
             // Bỏ qua nếu item rỗng hoặc đang trong quá trình gán dữ liệu tự động
@@ -1024,13 +1176,28 @@ namespace ColumnRebar.ViewModels
         // Hàm Xóa sạch thép cũ của cột để Revit không sinh ra thanh thép trùng
         private void ClearExistingRebars(FamilyInstance column)
         {
-            RebarHostData rebarHostData = RebarHostData.GetRebarHostData(column);
-            if (rebarHostData == null) return;
-
-            IList<Rebar> rebars = rebarHostData.GetRebarsInHost().Cast<Rebar>().ToList();
-            foreach (var r in rebars)
+            if (column == null || !column.IsValidObject) return;
+            try
             {
-                _doc.Delete(r.Id);
+                RebarHostData rebarHostData = RebarHostData.GetRebarHostData(column);
+                if (rebarHostData == null) return;
+
+                var rebars = rebarHostData.GetRebarsInHost();
+                if (rebars != null && rebars.Count > 0)
+                {
+                    // Ép sang ToList() để không bị lỗi CollectionModified khi xóa
+                    foreach (var r in rebars.ToList())
+                    {
+                        if (r != null && r.IsValidObject)
+                        {
+                            _doc.Delete(r.Id);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Nuốt lỗi an toàn nếu Revit từ chối xóa một thanh thép bị khóa
             }
         }
     }

@@ -314,12 +314,13 @@
                                         Text="{Binding SpacingSparse}"/>
                                     </DockPanel>
 
-                                    <DockPanel Style="{StaticResource InputRow}">
-                                        <DockPanel Style="{StaticResource InputRow}">
-                                            <RadioButton Content="Đai móc" IsChecked="{Binding IsHookTie}" Foreground="Black" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                            <RadioButton Content="Đai lồng kín" IsChecked="{Binding IsClosedTie}" Foreground="Black" VerticalAlignment="Center"/>
-                                            <Button Content="XÓA TẤT CẢ" Command="{Binding ClearAllTiesCommand}" Width="80" DockPanel.Dock="Right" HorizontalAlignment="Right" Background="#F3F4F6" Cursor="Hand"/>
-                                        </DockPanel>
+                                    <DockPanel Style="{StaticResource InputRow}" Margin="0,0,0,10">
+                                        <TextBlock Text="Loại đai bổ sung:" Foreground="Black" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                        <ComboBox ItemsSource="{Binding AvailableTieStyles}" 
+                                                  SelectedItem="{Binding SelectedTieStyle}" 
+                                                  DisplayMemberPath="Name" 
+                                                  Width="220" VerticalAlignment="Center"/>
+                                        <Button Content="XÓA TẤT CẢ" Command="{Binding ClearAllTiesCommand}" Width="80" DockPanel.Dock="Right" HorizontalAlignment="Right" Background="#F3F4F6" Cursor="Hand"/>
                                     </DockPanel>
 
                                     <Border BorderBrush="#16A34A" BorderThickness="2" Height="120" Margin="0,10,0,0">
