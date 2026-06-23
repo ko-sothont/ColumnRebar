@@ -38,6 +38,11 @@ namespace ColumnRebar.Models
         public double Thickness { get; set; }
         public string PathData { get; set; }
     }
+    public class MainTieType
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
     public class RebarTypeOption
     {
         public string Name { get; set; }

@@ -57,6 +57,19 @@ namespace ColumnRebar.ViewModels
         [ObservableProperty] private bool _isAdditionalStirrupCustom = false;
         [ObservableProperty] private double _additionalStirrupSpacing = 200;
         [ObservableProperty] private RebarHookOption _selectedAdditionalTieHook;
+        private ObservableCollection<MainTieType> _availableMainTieTypes;
+        public ObservableCollection<MainTieType> AvailableMainTieTypes
+        {
+            get { return _availableMainTieTypes; }
+            set { _availableMainTieTypes = value; OnPropertyChanged(nameof(AvailableMainTieTypes)); }
+        }
+
+        private MainTieType _selectedMainTieType;
+        public MainTieType SelectedMainTieType
+        {
+            get { return _selectedMainTieType; }
+            set { _selectedMainTieType = value; OnPropertyChanged(nameof(SelectedMainTieType)); }
+        }
         public ObservableCollection<TieStyleOption> AvailableTieStyles { get; set; }
         public TieStyleOption SelectedTieStyle { get; set; }
         public List<Tuple<RebarDot, RebarDot, int>> AdvancedClosedTies { get; set; } = new List<Tuple<RebarDot, RebarDot, int>>();
@@ -230,11 +243,11 @@ namespace ColumnRebar.ViewModels
             string packUri = "pack://application:,,,/ColumnRebar;component/Resources/Icons/";
 
             StirrupLayouts = new ObservableCollection<StirrupLayoutOption>
-            {
-                             new StirrupLayoutOption { Name = "L1, L2, L1", IconPath = packUri + "L1_L2_L1.png" },
-                             new StirrupLayoutOption { Name = "L1", IconPath = packUri + "L1.png" },
-                             new StirrupLayoutOption { Name = "L1, L2", IconPath = packUri + "L1_L2.png" }
-            };
+    {
+                     new StirrupLayoutOption { Name = "L1, L2, L1", IconPath = packUri + "L1_L2_L1.png" },
+                     new StirrupLayoutOption { Name = "L1", IconPath = packUri + "L1.png" },
+                     new StirrupLayoutOption { Name = "L1, L2", IconPath = packUri + "L1_L2.png" }
+    };
 
             Cx = 2;
             Cy = 2;
@@ -254,19 +267,31 @@ namespace ColumnRebar.ViewModels
                 SelectedMainTieHook = defaultHook;
                 SelectedAdditionalTieHook = defaultHook;
             }
-            AvailableTieStyles = new ObservableCollection<TieStyleOption>
-            {
-                new TieStyleOption { Id = 1, Name = "1. Đai C / Đai thẳng (1 điểm)" },
-                new TieStyleOption { Id = 2, Name = "2. Đai CN (Móc 135x135)" },
-                new TieStyleOption { Id = 3, Name = "3. Đai 2 chữ C đối nhau" },
-                new TieStyleOption { Id = 4, Name = "4. Đai CN (Dừng ở trung điểm)" },
-                new TieStyleOption { Id = 5, Name = "5. Đai CN (Móc 135x90 + 1d)" },
-                new TieStyleOption { Id = 6, Name = "6. Đai CN (Móc 135x135)" },
-                new TieStyleOption { Id = 7, Name = "7. Đai chéo kép (135x90 + 1d)" },
-                new TieStyleOption { Id = 8, Name = "8. Đai chéo kép (Móc 180x180)" }
-            };
 
+            AvailableTieStyles = new ObservableCollection<TieStyleOption>
+    {
+        new TieStyleOption { Id = 1, Name = "1. Đai C / Đai thẳng (1 điểm)" },
+        new TieStyleOption { Id = 2, Name = "2. Đai CN (Móc 135x135)" },
+        new TieStyleOption { Id = 3, Name = "3. Đai 2 chữ C đối nhau" },
+        new TieStyleOption { Id = 4, Name = "4. Đai CN (Dừng ở trung điểm)" },
+        new TieStyleOption { Id = 5, Name = "5. Đai CN (Móc 135x90 + 1d)" },
+        new TieStyleOption { Id = 6, Name = "6. Đai CN (Móc 135x135)" },
+        new TieStyleOption { Id = 7, Name = "7. Đai chéo kép (135x90 + 1d)" },
+        new TieStyleOption { Id = 8, Name = "8. Đai chéo kép (Móc 180x180)" }
+    };
             SelectedTieStyle = AvailableTieStyles[0];
+
+            // --- THÊM LIST ĐAI CHÍNH VÀO ĐÂY (NẰM TRONG HÀM) ---
+            AvailableMainTieTypes = new ObservableCollection<MainTieType>
+    {
+        new MainTieType { Id = 1, Name = "1. Kín (Móc 135x135)" },
+        new MainTieType { Id = 2, Name = "2. Nối chồng (Lap Splice 30d)" },
+        new MainTieType { Id = 3, Name = "3. Chạm 1 điểm (Hàn giáp mối)" },
+        new MainTieType { Id = 4, Name = "4. Kín (Móc 135x90)" },
+        new MainTieType { Id = 5, Name = "5. Ghép góc (Móc 90x90 + 15d)" },
+        new MainTieType { Id = 6, Name = "6. Ghép góc (Móc 135x135 + 15d)" }
+    };
+            SelectedMainTieType = AvailableMainTieTypes.FirstOrDefault();
         }
 
         private void ExtractColumnDataFromRevit()
@@ -293,8 +318,6 @@ namespace ColumnRebar.ViewModels
                 if (coverType != null) OtherCover = Math.Round(coverType.CoverDistance * 304.8).ToString();
             }
         }
-
-        // === THÊM MỚI 4: Hàm trích xuất dữ liệu thép đang có trên mô hình khi click tầng ===
         private void ExtractExistingRebarFromRevit(ColumnPreviewItem item)
         {
             var col = SelectedColumns.FirstOrDefault(c => c.Id == item.ColumnId);
@@ -510,7 +533,7 @@ namespace ColumnRebar.ViewModels
                     double hk = 10;
                     double gap = 4; // Độ lồi ra ngoài của móc
 
-                    if (tieId == 2 || tieId == 6)
+                    if (tieId == 2)
                     {
                         path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
                         path += $" M {minX},{minY} L {minX + hk},{minY + hk}";
@@ -547,15 +570,45 @@ namespace ColumnRebar.ViewModels
                         path += $" M {minX},{minY} L {minX + hk},{minY + hk}"; // 135 vào trong
                         path += $" M {minX},{minY} L {minX - gap},{minY} L {minX - gap},{minY + hk + 5}"; // 90 bẻ xuống
                     }
+                    else if (tieId == 6)
+                    {
+                        bool isHorizontal = Math.Abs(d1.X - d2.X) > Math.Abs(d1.Y - d2.Y);
+                        if (isHorizontal)
+                        {
+                            // Click ngang -> Hình chữ U mở ở cạnh TRÊN
+                            // Đi từ Top-Left -> Bottom-Left -> Bottom-Right -> Top-Right
+                            path = $"M {minX},{minY} L {minX},{maxY} L {maxX},{maxY} L {maxX},{minY}";
+
+                            // Thêm 2 móc 135 độ quặp vào trong
+                            path += $" M {minX},{minY} L {minX + hk},{minY + hk}";
+                            path += $" M {maxX},{minY} L {maxX - hk},{minY + hk}";
+                        }
+                        else
+                        {
+                            // Click dọc -> Hình chữ U mở ở cạnh PHẢI
+                            // Đi từ Top-Right -> Top-Left -> Bottom-Left -> Bottom-Right
+                            path = $"M {maxX},{minY} L {minX},{minY} L {minX},{maxY} L {maxX},{maxY}";
+
+                            // Thêm 2 móc 135 độ quặp vào trong
+                            path += $" M {maxX},{minY} L {maxX - hk},{minY + hk}";
+                            path += $" M {maxX},{maxY} L {maxX - hk},{maxY - hk}";
+                        }
+                    }
                     else if (tieId == 7)
                     {
-                        path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
-                        // Top-Left
-                        path += $" M {minX},{minY} L {minX + hk},{minY + hk}"; // 135 In
-                        path += $" M {minX},{minY} L {minX - gap},{minY} L {minX - gap},{minY + hk + 5}"; // 90 Out Down
-                                                                                                          // Bottom-Right
-                        path += $" M {maxX},{maxY} L {maxX - hk},{maxY - hk}"; // 135 In
-                        path += $" M {maxX},{maxY} L {maxX + gap},{maxY} L {maxX + gap},{maxY - hk - 5}"; // 90 Out Up
+                        // --- THANH L1 (Cạnh Trên và Cạnh Phải) ---
+                        path = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY}";
+                        // Đầu 90 độ tại Top-Left (Văng ra ngoài đâm xuống)
+                        path += $" M {minX},{minY} L {minX - gap},{minY} L {minX - gap},{minY + hk + 5}";
+                        // Đầu 135 độ tại Bottom-Right (Bẻ quặp vào trong)
+                        path += $" M {maxX},{maxY} L {maxX - hk},{maxY - hk}";
+
+                        // --- THANH L2 (Cạnh Dưới và Cạnh Trái) ---
+                        path += $" M {maxX},{maxY} L {minX},{maxY} L {minX},{minY}";
+                        // Đầu 90 độ tại Bottom-Right (Văng ra ngoài đâm lên)
+                        path += $" M {maxX},{maxY} L {maxX + gap},{maxY} L {maxX + gap},{maxY - hk - 5}";
+                        // Đầu 135 độ tại Top-Left (Bẻ quặp vào trong, khóa chung với móc 90 của L1)
+                        path += $" M {minX},{minY} L {minX + hk},{minY + hk}";
                     }
                     else if (tieId == 8)
                     {
@@ -715,7 +768,6 @@ namespace ColumnRebar.ViewModels
                     RebarHookType hook135 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
                         .FirstOrDefault(h => h.Style == RebarStyle.StirrupTie && ((h.Name != null && h.Name == mainHookName) || (h.Name != null && h.Name.Contains("135")) || Math.Abs(h.HookAngle - 2.356) < 0.01))
                         ?? new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>().FirstOrDefault(h => h.Style == RebarStyle.StirrupTie);
-
                     if (hook135 == null)
                     {
                         System.Windows.MessageBox.Show("Dự án chưa load Family móc thép đai kiểu StirrupTie!", "Lỗi", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
@@ -731,8 +783,12 @@ namespace ColumnRebar.ViewModels
                     RebarHookType standardHook135 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
                         .FirstOrDefault(h => h.Style == RebarStyle.Standard && ((h.Name != null && h.Name.Contains("135")) || Math.Abs(h.HookAngle - 2.356) < 0.01))
                         ?? new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>().FirstOrDefault(h => h.Style == RebarStyle.Standard);
-
+                    RebarHookType standardHook90 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
+                        .FirstOrDefault(h => h.Style == RebarStyle.Standard && (Math.Abs(h.HookAngle - Math.PI / 2) < 0.05 || (h.Name != null && h.Name.Contains("90"))));
                     var columnsToRun = SelectedColumns.ToList();
+                    RebarHookType standardHook180 = new FilteredElementCollector(_doc).OfClass(typeof(RebarHookType)).Cast<RebarHookType>()
+                .FirstOrDefault(h => h.Style == RebarStyle.Standard && (Math.Abs(h.HookAngle - Math.PI) < 0.05 || (h.Name != null && h.Name.Contains("180"))))
+                ?? standardHook135;
 
                     foreach (var col in columnsToRun)
                     {
@@ -882,13 +938,143 @@ namespace ColumnRebar.ViewModels
 
                             double tieExt = mainBarRadius + (tieBarType.BarModelDiameter / 2.0);
                             double stirrupExt = mainBarRadius + (stirrupBarType.BarModelDiameter / 2.0);
+                            // Tọa độ 4 góc của Đai chính
+                            // p1 (Bottom-Left), p2 (Bottom-Right), p3 (Top-Right), p4 (Top-Left)
                             XYZ p1 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
                             XYZ p2 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Min.Y + offsetRev - stirrupExt, 0);
                             XYZ p3 = new XYZ(bb.Max.X - offsetRev + stirrupExt, bb.Max.Y - offsetRev + stirrupExt, 0);
                             XYZ p4 = new XYZ(bb.Min.X + offsetRev - stirrupExt, bb.Max.Y - offsetRev + stirrupExt, 0);
-                            List<Curve> outerProfile = new List<Curve> { Line.CreateBound(p1, p2), Line.CreateBound(p2, p3), Line.CreateBound(p3, p4), Line.CreateBound(p4, p1) };
 
-                            ProcessProfileZones("Đai chính", outerProfile, stirrupBarType, RebarStyle.StirrupTie, hook135, hook135, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
+                            // --- LOGIC 6 LOẠI ĐAI CHÍNH ---
+                            int mainTieItem = SelectedMainTieType != null ? SelectedMainTieType.Id : 1;
+
+                            List<Curve> mainProfile = new List<Curve>();
+                            RebarStyle mainStyle = RebarStyle.StirrupTie;
+                            RebarHookType mainStartHook = null;
+                            RebarHookType mainEndHook = null;
+
+                            double dMain_mm = stirrupBarType.BarNominalDiameter * 304.8;
+
+                            // Lấy chiều dài 2 cạnh của đai để làm mốc chặn an toàn
+                            double faceWidth = p2.X - p1.X;
+                            double faceHeight = p4.Y - p1.Y;
+
+                            if (mainTieItem == 1)
+                            {
+                                // ITEM 1: Đai chữ nhật khép kín, 2 móc 135 độ
+                                mainProfile = new List<Curve> { Line.CreateBound(p1, p2), Line.CreateBound(p2, p3), Line.CreateBound(p3, p4), Line.CreateBound(p4, p1) };
+                                mainStyle = RebarStyle.StirrupTie;
+                                mainStartHook = hook135;
+                                mainEndHook = hook135;
+                            }
+                            else if (mainTieItem == 2)
+                            {
+                                // ITEM 2: CHÂN ÁI ĐÍCH THỰC - 1 THANH THÉP DUY NHẤT, NỐI CẠNH TRÁI (PHƯƠNG Y)
+                                // Tuyệt đối không dùng 2 thanh nữa! Dùng đường xoắn ốc xếp "Trong - Ngoài".
+
+                                double d_ft = SelectedStirrupRebar.DiameterMm / 304.8;
+                                double overlap_ft = 10 * d_ft; // Đoạn chồng nhau 10d
+                                double shift_ft = 5 * d_ft;    // Thụt cách góc đáy 5d
+
+                                double leftEdgeLength = p1.DistanceTo(p4);
+                                if (overlap_ft + shift_ft > leftEdgeLength * 0.8)
+                                {
+                                    overlap_ft = leftEdgeLength * 0.5;
+                                    shift_ft = leftEdgeLength * 0.2;
+                                }
+
+                                // Vector hướng chạy dọc (phương Y) và hướng chạy ngang (phương X)
+                                XYZ dirY = (p4 - p1).Normalize();
+                                XYZ dirX = (p2 - p1).Normalize();
+
+                                // BÍ QUYẾT TỐI THƯỢNG: Thụt lớp trong sang phải đúng 1 đường kính (gap)
+                                double gap = d_ft;
+
+                                // Lớp trong: Thụt vào 'gap' và bắt đầu từ điểm shift chạy lên
+                                XYZ S_in = p1 + dirX * gap + dirY * shift_ft;
+                                XYZ p4_in = p4 + dirX * gap; // Điểm góc trên trái của lớp trong
+
+                                // Lớp ngoài: Nằm sát mép trái, chạy từ đáy p1 lên đè qua lớp trong
+                                XYZ OuterEnd = p1 + dirY * (shift_ft + overlap_ft);
+
+                                // VẼ ĐÚNG 1 VÒNG DUY NHẤT (Liền mạch 100%, không chia cắt)
+                                List<Curve> singleProfile = new List<Curve> {
+                                    Line.CreateBound(S_in, p4_in),     // 1. Cạnh trái (lớp trong) chạy thẳng lên
+                                    Line.CreateBound(p4_in, p3),       // 2. Cạnh trên (chạy sang phải) -> LIỀN MẠCH!
+                                    Line.CreateBound(p3, p2),          // 3. Cạnh phải (chạy xuống đáy) -> LIỀN MẠCH!
+                                    Line.CreateBound(p2, p1),          // 4. Cạnh đáy (chạy sang trái) -> LIỀN MẠCH!
+                                    Line.CreateBound(p1, OuterEnd)     // 5. Cạnh trái (lớp ngoài) chạy lên gác đè lớp trong 10d
+                                };
+
+                                // GỌI HÀM TẠO THÉP ĐÚNG 1 LẦN! 
+                                // Thống kê ra 1 thanh đai. Chỗ nối 10d sẽ tự sát rạt vào nhau.
+                                ProcessProfileZones("Đai chính Nối chồng", singleProfile, stirrupBarType, RebarStyle.Standard, null, null, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
+                            }
+                            else if (mainTieItem == 3)
+                            {
+                                // ITEM 3: Đai chữ nhật chạm nhau tại 1 điểm (Hàn giáp mối)
+                                double lap_mm = Math.Max(30 * dMain_mm, 300);
+                                double lap_ft = lap_mm / 304.8;
+
+                                // BÍ QUYẾT 1: Chặn không cho đoạn nối đâm xuyên ra ngoài nếu cột quá nhỏ
+                                if (lap_ft > faceWidth * 0.8) lap_ft = faceWidth * 0.8;
+
+                                XYZ sLap = new XYZ(p1.X + lap_ft, p1.Y, 0);
+                                mainProfile = new List<Curve> { Line.CreateBound(sLap, p2), Line.CreateBound(p2, p3), Line.CreateBound(p3, p4), Line.CreateBound(p4, p1), Line.CreateBound(p1, sLap) };
+
+                                // BÍ QUYẾT 2: Ép dùng StirrupTie để Revit tự động cuộn tròn khép kín, không bị văng râu thẳng ra ngoài
+                                mainStyle = RebarStyle.StirrupTie;
+                                mainStartHook = null;
+                                mainEndHook = null;
+                            }
+                            else if (mainTieItem == 4)
+                            {
+                                // ITEM 4: Đai chữ nhật khép kín, móc 135 và 90
+                                mainProfile = new List<Curve> { Line.CreateBound(p1, p2), Line.CreateBound(p2, p3), Line.CreateBound(p3, p4), Line.CreateBound(p4, p1) };
+                                mainStyle = RebarStyle.StirrupTie;
+                                mainStartHook = hook135;
+                                mainEndHook = hook90;
+                            }
+                            else if (mainTieItem == 5 || mainTieItem == 6)
+                            {
+                                // BẢN CHUẨN CUỐI CÙNG: 1 THANH DUY NHẤT - ĐƯỜNG XOẮN ỐC TÀNG HÌNH (SPIRAL)
+
+                                double d_ft = SelectedStirrupRebar.DiameterMm / 304.8;
+                                double lap15_ft = 15.0 * d_ft;
+                                if (lap15_ft > faceHeight * 0.8) lap15_ft = faceHeight * 0.8;
+                                if (lap15_ft > faceWidth * 0.8) lap15_ft = faceWidth * 0.8;
+
+                                // BÍ QUYẾT: Để vẽ 1 thanh đai vươn 15d đè lên nhau mà KHÔNG BỊ LỖI TRÙNG NÉT,
+                                // chúng ta phải offset lớp trong vào 1.5mm.
+                                double gap = 0.005; // Khoảng cách 1.5mm (Vô hình trên 3D)
+
+                                XYZ S = new XYZ(p4.X + lap15_ft, p4.Y, 0); // Đầu Start vươn phương X (nằm ngoài)
+                                XYZ E_in = new XYZ(p4.X + gap, p4.Y - lap15_ft, 0); // Đầu End vươn phương Y (nằm trong, thụt 1.5mm)
+
+                                // Vẽ 1 đường chạy liên tục không đứt đoạn (1 THANH DUY NHẤT)
+                                List<Curve> singleProfile = new List<Curve> {
+                                    Line.CreateBound(S, p4), // 1. Vươn 15d phương X chạy về góc p4
+                                    Line.CreateBound(p4, p1), // 2. Cạnh trái
+                                    Line.CreateBound(p1, p2), // 3. Cạnh đáy (LIỀN 1 MẠCH TUYỆT ĐỐI, KHÔNG VẾT CẮT!)
+                                    
+                                    // 4. Cạnh phải chạy lên (nhưng dừng sớm 1.5mm để chuẩn bị thụt vào trong)
+                                    Line.CreateBound(p2, new XYZ(p3.X, p3.Y - gap, 0)), 
+                                    
+                                    // 5. Cạnh trên chạy về p4 (thụt vào trong 1.5mm để né đường số 1)
+                                    Line.CreateBound(new XYZ(p3.X, p3.Y - gap, 0), new XYZ(p4.X + gap, p4.Y - gap, 0)),
+                                    
+                                    // 6. Vươn 15d phương Y cắm xuống (thụt vào trong 1.5mm để né đường số 2)
+                                    Line.CreateBound(new XYZ(p4.X + gap, p4.Y - gap, 0), E_in)
+                                };
+
+                                RebarHookType hook = (mainTieItem == 5) ? standardHook90 : standardHook135;
+
+                                // GỌI ĐÚNG 1 LẦN -> Ra đúng 1 thanh thép trong thống kê!
+                                // Dùng RebarStyle.Standard để giữ nguyên hình dáng 15d vươn thẳng rồi mới móc.
+                                ProcessProfileZones("Đai chính góc p4", singleProfile, stirrupBarType, RebarStyle.Standard, hook, hook, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
+                            }
+                            // TIẾN HÀNH VẼ ĐAI CHÍNH DỰA TRÊN CẤU HÌNH ĐÃ CHỌN
+                            ProcessProfileZones("Đai chính", mainProfile, stirrupBarType, mainStyle, mainStartHook, mainEndHook, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
 
                             var drawnHooks = new HashSet<string>();
                             if (safeRebarDots != null)
@@ -991,32 +1177,68 @@ namespace ColumnRebar.ViewModels
                                     else if (tieId == 6)
                                     {
                                         bool isHorizontal = Math.Abs(ptA.X - ptB.X) > Math.Abs(ptA.Y - ptB.Y);
-                                        List<Curve> profileMid;
+                                        List<Curve> profileU;
+
                                         if (isHorizontal)
                                         {
-                                            XYZ mTop = (c4 + c3) / 2;
-                                            profileMid = new List<Curve> { Line.CreateBound(mTop, c4), Line.CreateBound(c4, c1), Line.CreateBound(c1, c2), Line.CreateBound(c2, c3), Line.CreateBound(c3, mTop) };
+                                            // Đai chữ U mở ở cạnh TRÊN (Đi ngược chiều kim đồng hồ: c4 -> c1 -> c2 -> c3)
+                                            profileU = new List<Curve> {
+                                        Line.CreateBound(c4, c1), // Cạnh trái
+                                        Line.CreateBound(c1, c2), // Cạnh dưới
+                                        Line.CreateBound(c2, c3)  // Cạnh phải
+                                    };
                                         }
                                         else
                                         {
-                                            XYZ mRight = (c3 + c2) / 2;
-                                            profileMid = new List<Curve> { Line.CreateBound(mRight, c3), Line.CreateBound(c3, c4), Line.CreateBound(c4, c1), Line.CreateBound(c1, c2), Line.CreateBound(c2, mRight) };
+                                            // Đai chữ U mở ở cạnh PHẢI (Đi ngược chiều kim đồng hồ: c3 -> c4 -> c1 -> c2)
+                                            profileU = new List<Curve> {
+                                        Line.CreateBound(c3, c4), // Cạnh trên
+                                        Line.CreateBound(c4, c1), // Cạnh trái
+                                        Line.CreateBound(c1, c2)  // Cạnh dưới
+                                    };
                                         }
-                                        ProcessProfileZones("Item 6", profileMid, tieBarType, RebarStyle.StirrupTie, hook135, hook135, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+
+                                        // CHÌA KHÓA: Đổi thành RebarStyle.Standard và standardHook135 vì đây là đai chữ U (hở)
+                                        ProcessProfileZones("Item 6", profileU, tieBarType, RebarStyle.Standard, standardHook135, standardHook135, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
                                     }
                                     else if (tieId == 7)
                                     {
-                                        List<Curve> rectReverse = new List<Curve> { Line.CreateBound(c3, c2), Line.CreateBound(c2, c1), Line.CreateBound(c1, c4), Line.CreateBound(c4, c3) };
-                                        // SỬA LỖI: Đổi Right thành Left cho móc 90
-                                        ProcessProfileZones("Item 7", rectProfile, tieBarType, RebarStyle.StirrupTie, hook135, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
-                                        ProcessProfileZones("Item 7 Đảo", rectReverse, tieBarType, RebarStyle.StirrupTie, hook135, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                        // THANH L1: Nằm ở cao độ chuẩn.
+                                        List<Curve> profileL1 = new List<Curve> { Line.CreateBound(c4, c3), Line.CreateBound(c3, c2) };
+
+                                        // LOGIC CHUẨN CỦA BẠN: Dịch chuyển Z đúng bằng 1 đường kính cốt thép
+                                        double dZ = SelectedTieRebar.DiameterMm / 304.8;
+                                        XYZ offsetZ = new XYZ(0, 0, dZ);
+
+                                        // THANH L2: Nhấc lên bằng đúng 1 đường kính.
+                                        List<Curve> profileL2 = new List<Curve> {
+                                    Line.CreateBound(c2 + offsetZ, c1 + offsetZ),
+                                    Line.CreateBound(c1 + offsetZ, c4 + offsetZ)
+                                };
+
+                                        // SỬA LỖI CHIỀU MÓC: Đổi toàn bộ 'Left' thành 'Right' để ép móc quặp vào trong
+                                        ProcessProfileZones("Item 7 L1", profileL1, tieBarType, RebarStyle.StirrupTie, hook90, hook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                        ProcessProfileZones("Item 7 L2", profileL2, tieBarType, RebarStyle.StirrupTie, hook90, hook135, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
                                     }
                                     else if (tieId == 8)
                                     {
-                                        List<Curve> rectReverse = new List<Curve> { Line.CreateBound(c3, c2), Line.CreateBound(c2, c1), Line.CreateBound(c1, c4), Line.CreateBound(c4, c3) };
-                                        // SỬA LỖI: Đổi Right thành Left cho móc 90
-                                        ProcessProfileZones("Item 8", rectProfile, tieBarType, RebarStyle.StirrupTie, hook180, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
-                                        ProcessProfileZones("Item 8 Đảo", rectReverse, tieBarType, RebarStyle.StirrupTie, hook180, hook90, RebarHookOrientation.Left, RebarHookOrientation.Left, true);
+                                        // THANH L1: Góc Top-Left (c4) -> Top-Right (c3) -> Bottom-Right (c2)
+                                        List<Curve> profileL1 = new List<Curve> { Line.CreateBound(c4, c3), Line.CreateBound(c3, c2) };
+
+                                        // Dịch chuyển Z đúng bằng 1 đường kính cốt thép để 2 thanh nằm sát mép nhau
+                                        double dZ = SelectedTieRebar.DiameterMm / 304.8;
+                                        XYZ offsetZ = new XYZ(0, 0, dZ);
+
+                                        // THANH L2: Nhấc lên bằng đúng 1 đường kính. Góc Bottom-Right (c2) -> Bottom-Left (c1) -> Top-Left (c4)
+                                        List<Curve> profileL2 = new List<Curve> {
+                                    Line.CreateBound(c2 + offsetZ, c1 + offsetZ),
+                                    Line.CreateBound(c1 + offsetZ, c4 + offsetZ)
+                                };
+
+                                        // VẼ BẰNG STIRRUP TIE: Gán móc 180 và 90. 
+                                        // Dùng hướng 'Right' để ép toàn bộ râu thép quặp ôm sát vào lõi cột!
+                                        ProcessProfileZones("Item 8 L1", profileL1, tieBarType, RebarStyle.StirrupTie, hook180, hook90, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
+                                        ProcessProfileZones("Item 8 L2", profileL2, tieBarType, RebarStyle.StirrupTie, hook180, hook90, RebarHookOrientation.Right, RebarHookOrientation.Right, true);
                                     }
                                 }
                             }
