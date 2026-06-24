@@ -118,10 +118,11 @@ namespace ColumnRebar.Models
         public RebarTypeOption SavedStirrupRebar { get; set; }
         public RebarTypeOption SavedTieRebar { get; set; }
         public StirrupLayoutOption SavedStirrupLayout { get; set; }
+        public MainTieType SavedMainTieType { get; set; }
 
         // Lưu trạng thái vẽ đai phụ (Cực kỳ quan trọng để không mất hình đai khi chuyển tầng)
         public List<int> SavedDotTies { get; set; } = new List<int>();
-        public List<Tuple<int, int>> SavedCustomClosedTieIndices { get; set; } = new List<Tuple<int, int>>();
+        public List<Tuple<int, int, int>> SavedCustomClosedTieIndices { get; set; } = new List<Tuple<int, int, int>>();
         public List<Tuple<int, int, int>> SavedAdvancedClosedTieIndices { get; set; } = new List<Tuple<int, int, int>>();
     }
     public class RebarHookOption

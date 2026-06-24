@@ -68,7 +68,9 @@ namespace ColumnRebar.ViewModels
         public MainTieType SelectedMainTieType
         {
             get { return _selectedMainTieType; }
-            set { _selectedMainTieType = value; OnPropertyChanged(nameof(SelectedMainTieType)); }
+            set { _selectedMainTieType = value; OnPropertyChanged(nameof(SelectedMainTieType));
+            RefreshInternalTies();
+            }
         }
         public ObservableCollection<TieStyleOption> AvailableTieStyles { get; set; }
         public TieStyleOption SelectedTieStyle { get; set; }
@@ -83,10 +85,30 @@ namespace ColumnRebar.ViewModels
         partial void OnSelectedTieRebarChanged(RebarTypeOption value) => RecalculateRebarInfo();
         private RebarDot _firstClickedDot = null;
         public List<Tuple<RebarDot, RebarDot>> _customClosedTies = new();
-
+        [RelayCommand]
+        private void Close(System.Windows.Window window)
+        {
+            // Kiểm tra xem window có tồn tại không rồi đóng nó lại
+            if (window != null)
+            {
+                window.Close();
+            }
+        }
         partial void OnSelectedStirrupLayoutChanged(StirrupLayoutOption value)
         {
+            // 1. NẾU ĐANG LOAD DỮ LIỆU CHUYỂN TẦNG -> PHANH LẠI NGAY! (Không tự ý vẽ)
+            if (_isLoadingData) return;
+
+            // 2. Cập nhật hình vẽ mặt cắt cột (bên phải)
             UpdateRebarDiagram();
+
+            // 3. Ép giao diện vẽ lại ngay các sọc đai cho đúng cấu hình vừa chọn (bên trái)
+            if (SelectedColumnPreview != null)
+            {
+                UpdateStirrupGraphic(SelectedColumnPreview, value?.Name ?? "");
+            }
+
+            // 4. Chạy hàm này để nó cập nhật các đoạn Text ghi chú
             GenerateColumnPreview();
         }
         private bool _isLoadingData = false; // Cờ chặn ghi đè dữ liệu khi đang load
@@ -162,23 +184,62 @@ namespace ColumnRebar.ViewModels
             if (_firstClickedDot != null) { _firstClickedDot.IsSelected = false; _firstClickedDot = null; }
             RefreshInternalTies();
         }
+        private void UpdateStirrupGraphic(ColumnPreviewItem item, string layoutName)
+        {
+            if (item == null) return;
 
+            double lOver4 = (item.UIColumnHeight - item.UIBeamDepth) / 4;
+            var stirrups = new List<double>();
+
+            // Vẽ đai trong vùng Dầm
+            for (double y = 2; y <= item.UIBeamDepth; y += 4) stirrups.Add(y);
+
+            if (layoutName.Contains("L1, L2, L1"))
+            {
+                for (double y = item.UIBeamDepth; y <= item.UIBeamDepth + lOver4; y += 4) stirrups.Add(y);
+                for (double y = item.UIBeamDepth + lOver4 + 10; y <= item.UIColumnHeight - lOver4; y += 10) stirrups.Add(y);
+                for (double y = item.UIColumnHeight - lOver4 + 4; y <= item.UIColumnHeight - 2; y += 4) stirrups.Add(y);
+            }
+            else if (layoutName == "L1")
+            {
+                for (double y = item.UIBeamDepth; y <= item.UIColumnHeight - 2; y += 6) stirrups.Add(y);
+            }
+            else if (layoutName.Contains("L1, L2"))
+            {
+                for (double y = item.UIBeamDepth; y <= item.UIColumnHeight - lOver4; y += 10) stirrups.Add(y);
+                for (double y = item.UIColumnHeight - lOver4 + 4; y <= item.UIColumnHeight - 2; y += 4) stirrups.Add(y);
+            }
+
+            // === SỬA Ở ĐÂY: Dùng Clear() và Add() để WPF tự động nhận diện thay đổi ngay lập tức ===
+            if (item.StirrupPositions == null) item.StirrupPositions = new ObservableCollection<double>();
+            item.StirrupPositions.Clear();
+            foreach (var y in stirrups)
+            {
+                item.StirrupPositions.Add(y);
+            }
+
+            item.RebarInfoText = $"Thép chủ: {TotalRebarText}\nKiểu phân bố: {layoutName}";
+        }
         private void GenerateColumnPreview()
         {
             if (SelectedColumns == null || SelectedColumns.Count == 0) return;
+
+            // Nếu danh sách đã có rồi, ta KHÔNG tạo lại từ đầu nữa, mà chỉ Cập nhật hình vẽ cho Tầng đang chọn thôi
             if (ColumnPreviews != null && ColumnPreviews.Count > 0)
             {
                 if (SelectedColumnPreview != null)
                 {
-                    SelectedColumnPreview.RebarInfoText = $"Thép chủ: {TotalRebarText}\nKiểu phân bố: {SelectedStirrupLayout?.Name ?? ""}";
+                    string currentLayout = SelectedStirrupLayout?.Name ?? "";
+                    UpdateStirrupGraphic(SelectedColumnPreview, currentLayout);
                 }
-                return; // Thoát hàm luôn, không cho chạy phần code "new List<ColumnPreviewItem>()" bên dưới
+                return;
             }
+
+            // KHỞI TẠO LẦN ĐẦU TIÊN
             var previews = new List<ColumnPreviewItem>();
-            string layoutName = SelectedStirrupLayout?.Name ?? "";
-            var sortedColumns = SelectedColumns
-                .OrderByDescending(c => c.get_BoundingBox(null).Min.Z)
-                .ToList();
+            string defaultLayoutName = SelectedStirrupLayout?.Name ?? "";
+            var sortedColumns = SelectedColumns.OrderByDescending(c => c.get_BoundingBox(null).Min.Z).ToList();
+
             double scaleFactor = 0.04;
             double actualBeamDepth = 450;
             if (!string.IsNullOrEmpty(BeamDepth)) double.TryParse(BeamDepth, out actualBeamDepth);
@@ -187,52 +248,28 @@ namespace ColumnRebar.ViewModels
             {
                 BoundingBoxXYZ bb = col.get_BoundingBox(null);
                 double actualHeightMm = (bb.Max.Z - bb.Min.Z) * 304.8;
-
                 ElementId baseLevelId = col.get_Parameter(BuiltInParameter.FAMILY_BASE_LEVEL_PARAM).AsElementId();
                 Level baseLevel = _doc.GetElement(baseLevelId) as Level;
                 string levelName = baseLevel != null ? $"▼ {baseLevel.Name} ({(baseLevel.Elevation * 304.8):F0})" : "Unknown Level";
 
                 double uiHeight = actualHeightMm * scaleFactor;
                 double uiBeamDepth = actualBeamDepth * scaleFactor;
-
                 double uiWidth = ColumnWidth * scaleFactor;
                 if (uiWidth < 30) uiWidth = 30; if (uiWidth > 80) uiWidth = 80;
 
-                double clearUIHeight = uiHeight - uiBeamDepth;
-                double lOver4 = clearUIHeight / 4;
-                var stirrups = new List<double>();
-
-                for (double y = 2; y <= uiBeamDepth; y += 4) stirrups.Add(y);
-
-                if (layoutName.Contains("L1, L2, L1"))
+                var newItem = new ColumnPreviewItem
                 {
-                    for (double y = uiBeamDepth; y <= uiBeamDepth + lOver4; y += 4) stirrups.Add(y);
-                    for (double y = uiBeamDepth + lOver4 + 10; y <= uiHeight - lOver4; y += 10) stirrups.Add(y);
-                    for (double y = uiHeight - lOver4 + 4; y <= uiHeight - 2; y += 4) stirrups.Add(y);
-                }
-                else if (layoutName == "L1")
-                {
-                    for (double y = uiBeamDepth; y <= uiHeight - 2; y += 6) stirrups.Add(y);
-                }
-                else if (layoutName.Contains("L1, L2"))
-                {
-                    for (double y = uiBeamDepth; y <= uiHeight - lOver4; y += 10) stirrups.Add(y);
-                    for (double y = uiHeight - lOver4 + 4; y <= uiHeight - 2; y += 4) stirrups.Add(y);
-                }
-
-                previews.Add(new ColumnPreviewItem
-                {
-                    // === THÊM MỚI 3: Lưu Id của cột lại để sau này tìm thép ===
                     ColumnId = col.Id,
-
                     LevelName = levelName,
                     DimensionText = $"Height = {Math.Round(actualHeightMm)} (mm)\nBxH = {ColumnWidth}x{ColumnHeight}\nMark: {col.LookupParameter("Mark")?.AsString() ?? "Unknown"}",
-                    RebarInfoText = $"Thép chủ: {TotalRebarText}\nKiểu phân bố: {layoutName}",
                     UIColumnHeight = uiHeight,
                     UIColumnWidth = uiWidth,
-                    UIBeamDepth = uiBeamDepth,
-                    StirrupPositions = new ObservableCollection<double>(stirrups)
-                });
+                    UIBeamDepth = uiBeamDepth
+                };
+
+                // Gọi hàm vẽ ngay lúc khởi tạo
+                UpdateStirrupGraphic(newItem, defaultLayoutName);
+                previews.Add(newItem);
             }
 
             ColumnPreviews = new ObservableCollection<ColumnPreviewItem>(previews);
@@ -512,7 +549,121 @@ namespace ColumnRebar.ViewModels
                     }
                 }
             }
+            if (RebarDots != null && RebarDots.Any() && SelectedMainTieType != null)
+            {
+                // LẤY SỐ ID CỦA ĐAI CHÍNH (Nếu class của bạn dùng tên khác như .Value hoặc .Type thì đổi chữ .Id nhé)
+                int mainTieId = SelectedMainTieType.Id;
 
+                // Tính bán kính bo để ôm vừa ngoài cây thép chủ
+                double r = (RebarDots.First().Size / 2) + (tieThickness / 2) + 0.5;
+
+                // Tìm khung chữ nhật lớn nhất bao quanh TOÀN BỘ các cây thép
+                double minX = RebarDots.Min(d => Math.Min(d.X, d.OppositeX)) - r;
+                double maxX = RebarDots.Max(d => Math.Max(d.X, d.OppositeX)) + r;
+                double minY = RebarDots.Min(d => Math.Min(d.Y, d.OppositeY)) - r;
+                double maxY = RebarDots.Max(d => Math.Max(d.Y, d.OppositeY)) + r;
+
+                string mainPath = "";
+                double hk = 12;  // Chiều dài râu vươn ra (15d)
+                double gap = 3;  // Khoảng hở tàng hình để nhìn rõ 2 thanh gác đè nhau trên 2D
+
+                if (mainTieId == 1)
+                {
+                    // ITEM 1, 3: Đai thường khép kín
+                    mainPath = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+                    mainPath += $" M {minX},{minY} L {minX + hk},{minY + hk}";
+                    mainPath += $" M {minX},{minY} L {minX + hk / 2},{minY + hk + 2}";
+                }
+                else if (mainTieId == 2)
+                {
+                    // ITEM 2: Đai nối chồng (Lap Splice) - Nối đè nhau rõ ràng ở giữa CẠNH TRÁI
+                    double midY = (minY + maxY) / 2; // Tìm điểm chính giữa cạnh trái
+                    double lapHalf = 25; // Nửa chiều dài đoạn nối đè lên nhau
+                    double lapGap = 4;      // Khoảng hở tàng hình để nhìn rõ 2 nét đè song song
+
+                    // Vẽ 1 nét liền mạch chuẩn nét đỏ của bạn:
+                    // 1. Lớp ngoài (sát lề trái): Bắt đầu từ dưới (midY + lapHalf) đâm thẳng lên góc Top-Left
+                    mainPath = $"M {minX},{midY + lapHalf} L {minX},{minY}";
+
+                    // 2. Chạy vòng quanh cột: Top-Left -> Top-Right -> Bottom-Right -> Bottom-Left (hơi thụt vào tạo lớp trong)
+                    mainPath += $" L {maxX},{minY} L {maxX},{maxY} L {minX + lapGap},{maxY}";
+
+                    // 3. Lớp trong (thụt vào 'gap'): Từ góc Bottom-Left đâm ngược lên trên (midY - lapHalf) để gác đè lên lớp ngoài
+                    mainPath += $" L {minX + lapGap},{midY - lapHalf}";
+                }
+                else if (mainTieId == 3)
+                {
+                    // ITEM 3: Khép kín chạm 1 điểm - Vạch đánh dấu cực ngắn & Màu đen
+                    double midX = (minX + maxX) / 2;
+
+                    // 1. Vẽ vòng chữ nhật nét đơn (Sẽ tự được Add vào list ở cuối hàm với màu xanh)
+                    mainPath = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+
+                    // 2. Kẻ 1 vạch ngắn xíu (Độ dài nhô ra chỉ bằng ~0.8 lần bề dày nét vẽ)
+                    double tick = tieThickness * 0.8;
+                    string tickPath = $"M {midX},{minY - tick} L {midX},{minY + tick}";
+
+                    // 3. Tách riêng vạch kẻ thành 1 RebarLine độc lập để làm MÀU ĐEN
+                    // (Nếu class RebarLine của bạn chưa có thuộc tính Color/Stroke, bạn hãy tạm thời dùng màu mặc định 
+                    // hoặc thêm property `public string StrokeColor {get; set;}` vào class RebarLine nhé!)
+                    ties.Add(new RebarLine
+                    {
+                        PathData = tickPath,
+                        Thickness = tieThickness + 1 // Cho vạch đánh dấu dày hơn 1 chút cho rõ
+                        /*, StrokeColor = "Black" */ // Mở comment này ra nếu class của bạn hỗ trợ đổi màu
+                    });
+                }
+                else if (mainTieId == 4)
+                {
+                    // ITEM 4: Đai khép kín - 1 móc 135 độ và 1 móc 90 độ tại góc Top-Left
+                    double hookLen = 15; // Chiều dài của râu móc
+                    double outGap = 4;   // Khoảng vươn ra ngoài của móc 90 độ
+
+                    // 1. Khung chữ nhật chính ôm ngoài cùng
+                    mainPath = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+
+                    // 2. Râu móc 135 độ: Xích xuống dưới một chút, bẻ chéo 135 độ đâm thẳng vào tâm cột
+                    mainPath += $" M {minX},{minY + gap} L {minX + hookLen},{minY + hookLen + gap}";
+
+                    // 3. Râu móc 90 độ: Xích sang phải, đâm ngang lố ra ngoài góc (outGap) rồi bẻ gập 90 độ cắm thẳng xuống
+                    mainPath += $" M {minX + gap},{minY} L {minX - outGap},{minY} L {minX - outGap},{minY + hookLen}";
+                }
+                else if (mainTieId == 5)
+                {
+                    // ITEM 5: Vươn dài rõ ràng như nét vẽ đỏ (Móc 90 độ)
+                    double ext = 45;  // Đoạn vươn thẳng 15d (kéo dài hẳn ra)
+                    double tail = 15; // Đoạn bẻ quặp 90 độ
+
+                    // Khung chữ nhật chính ôm ngoài cùng
+                    mainPath = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+
+                    // Râu 1 (Phương ngang): Nằm thụt xuống 'gap', vươn thẳng sang PHẢI, bẻ 90 độ đâm XUỐNG
+                    mainPath += $" M {minX},{minY + gap} L {minX + ext},{minY + gap} L {minX + ext},{minY + gap + tail}";
+
+                    // Râu 2 (Phương dọc): Nằm thụt sang 'gap', vươn thẳng XUỐNG DƯỚI, bẻ 90 độ đâm sang PHẢI
+                    mainPath += $" M {minX + gap},{minY} L {minX + gap},{minY + ext} L {minX + gap + tail},{minY + ext}";
+                }
+                else if (mainTieId == 6)
+                {
+                    // ITEM 6: Vươn dài rõ ràng như nét vẽ đỏ (Móc 135 độ)
+                    double ext = 45;
+                    double tail = 15;
+
+                    // Khung chữ nhật chính ôm ngoài cùng
+                    mainPath = $"M {minX},{minY} L {maxX},{minY} L {maxX},{maxY} L {minX},{maxY} Z";
+
+                    // Râu 1 (Phương ngang): Nằm thụt xuống 'gap', vươn thẳng sang PHẢI, bẻ 135 độ QUẶP VÀO TRONG
+                    mainPath += $" M {minX},{minY + gap} L {minX + ext},{minY + gap} L {minX + ext - tail},{minY + gap + tail}";
+
+                    // Râu 2 (Phương dọc): Nằm thụt sang 'gap', vươn thẳng XUỐNG DƯỚI, bẻ 135 độ QUẶP VÀO TRONG
+                    mainPath += $" M {minX + gap},{minY} L {minX + gap},{minY + ext} L {minX + gap + tail},{minY + ext - tail}";
+                }
+                if (!string.IsNullOrEmpty(mainPath))
+                {
+                    // Thêm đai chính vào Canvas
+                    ties.Add(new RebarLine { PathData = mainPath, Thickness = tieThickness + 0.5 });
+                }
+            }
             if (AdvancedClosedTies != null)
             {
                 foreach (var tie in AdvancedClosedTies)
@@ -700,6 +851,7 @@ namespace ColumnRebar.ViewModels
                 item.SavedStirrupRebar = SelectedColumnPreview.SavedStirrupRebar;
                 item.SavedTieRebar = SelectedColumnPreview.SavedTieRebar;
                 item.SavedStirrupLayout = SelectedColumnPreview.SavedStirrupLayout;
+                item.SavedMainTieType = SelectedColumnPreview.SavedMainTieType;
 
                 // --- COPY ĐAI MÓC (Cực kỳ quan trọng: Phải dùng từ khóa 'new' để tách biệt bộ nhớ) ---
                 if (SelectedColumnPreview.SavedDotTies != null)
@@ -715,11 +867,13 @@ namespace ColumnRebar.ViewModels
                 // --- COPY ĐAI LỒNG KÍN ---
                 if (SelectedColumnPreview.SavedCustomClosedTieIndices != null)
                 {
-                    item.SavedCustomClosedTieIndices = new List<Tuple<int, int>>(SelectedColumnPreview.SavedCustomClosedTieIndices);
+                    // SỬA Ở ĐÂY: Nâng cấp Tuple<int, int> thành Tuple<int, int, int>
+                    item.SavedCustomClosedTieIndices = new List<Tuple<int, int, int>>(SelectedColumnPreview.SavedCustomClosedTieIndices);
                 }
                 else
                 {
-                    item.SavedCustomClosedTieIndices = new List<Tuple<int, int>>();
+                    // VÀ SỬA Ở ĐÂY NỮA
+                    item.SavedCustomClosedTieIndices = new List<Tuple<int, int, int>>();
                 }
 
                 // Đánh dấu là tầng này đã có dữ liệu (không cần tự động quét mô hình Revit nữa)
@@ -969,12 +1123,12 @@ namespace ColumnRebar.ViewModels
                             }
                             else if (mainTieItem == 2)
                             {
-                                // ITEM 2: CHÂN ÁI ĐÍCH THỰC - 1 THANH THÉP DUY NHẤT, NỐI CẠNH TRÁI (PHƯƠNG Y)
-                                // Tuyệt đối không dùng 2 thanh nữa! Dùng đường xoắn ốc xếp "Trong - Ngoài".
+                                // ITEM 2: BẢN TINH GỌN TỐI ĐA - 1 THANH DUY NHẤT, PHẲNG 100%
+                                // Thuận theo luật của Revit để không bao giờ bị lỗi và liền mạch mọi góc.
 
                                 double d_ft = SelectedStirrupRebar.DiameterMm / 304.8;
-                                double overlap_ft = 10 * d_ft; // Đoạn chồng nhau 10d
-                                double shift_ft = 5 * d_ft;    // Thụt cách góc đáy 5d
+                                double overlap_ft = 10 * d_ft;
+                                double shift_ft = 5 * d_ft;
 
                                 double leftEdgeLength = p1.DistanceTo(p4);
                                 if (overlap_ft + shift_ft > leftEdgeLength * 0.8)
@@ -983,32 +1137,23 @@ namespace ColumnRebar.ViewModels
                                     shift_ft = leftEdgeLength * 0.2;
                                 }
 
-                                // Vector hướng chạy dọc (phương Y) và hướng chạy ngang (phương X)
                                 XYZ dirY = (p4 - p1).Normalize();
-                                XYZ dirX = (p2 - p1).Normalize();
 
-                                // BÍ QUYẾT TỐI THƯỢNG: Thụt lớp trong sang phải đúng 1 đường kính (gap)
-                                double gap = d_ft;
+                                // ĐIỂM NỐI CHỒNG TRÊN CẠNH TRÁI (Nằm hoàn toàn trên mặt phẳng Z=0)
+                                XYZ lapStart = p1 + dirY * (shift_ft + overlap_ft); // Đầu bắt đầu (nằm cao hơn)
+                                XYZ lapEnd = p1 + dirY * shift_ft;                  // Đầu kết thúc (nằm thấp hơn)
 
-                                // Lớp trong: Thụt vào 'gap' và bắt đầu từ điểm shift chạy lên
-                                XYZ S_in = p1 + dirX * gap + dirY * shift_ft;
-                                XYZ p4_in = p4 + dirX * gap; // Điểm góc trên trái của lớp trong
-
-                                // Lớp ngoài: Nằm sát mép trái, chạy từ đáy p1 lên đè qua lớp trong
-                                XYZ OuterEnd = p1 + dirY * (shift_ft + overlap_ft);
-
-                                // VẼ ĐÚNG 1 VÒNG DUY NHẤT (Liền mạch 100%, không chia cắt)
+                                // VẼ ĐÚNG 1 VÒNG HÌNH CHỮ NHẬT DUY NHẤT
                                 List<Curve> singleProfile = new List<Curve> {
-                                    Line.CreateBound(S_in, p4_in),     // 1. Cạnh trái (lớp trong) chạy thẳng lên
-                                    Line.CreateBound(p4_in, p3),       // 2. Cạnh trên (chạy sang phải) -> LIỀN MẠCH!
-                                    Line.CreateBound(p3, p2),          // 3. Cạnh phải (chạy xuống đáy) -> LIỀN MẠCH!
-                                    Line.CreateBound(p2, p1),          // 4. Cạnh đáy (chạy sang trái) -> LIỀN MẠCH!
-                                    Line.CreateBound(p1, OuterEnd)     // 5. Cạnh trái (lớp ngoài) chạy lên gác đè lớp trong 10d
+                                    Line.CreateBound(lapStart, p4), // Cạnh trái (nửa trên)
+                                    Line.CreateBound(p4, p3),       // Cạnh trên -> LIỀN MẠCH
+                                    Line.CreateBound(p3, p2),       // Cạnh phải -> LIỀN MẠCH
+                                    Line.CreateBound(p2, p1),       // Cạnh đáy -> LIỀN MẠCH
+                                    Line.CreateBound(p1, lapEnd)    // Cạnh trái (nửa dưới) gác thẳng lên lapStart
                                 };
 
-                                // GỌI HÀM TẠO THÉP ĐÚNG 1 LẦN! 
-                                // Thống kê ra 1 thanh đai. Chỗ nối 10d sẽ tự sát rạt vào nhau.
-                                ProcessProfileZones("Đai chính Nối chồng", singleProfile, stirrupBarType, RebarStyle.Standard, null, null, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
+                                // Gọi 1 lần duy nhất! Mọi góc tự bo tròn, ra chuẩn 1 thanh đai.
+                                ProcessProfileZones("Đai chính Nối chồng", singleProfile, stirrupBarType, RebarStyle.StirrupTie, null, null, RebarHookOrientation.Left, RebarHookOrientation.Left, false);
                             }
                             else if (mainTieItem == 3)
                             {
@@ -1277,7 +1422,7 @@ namespace ColumnRebar.ViewModels
             // Bỏ qua nếu item rỗng hoặc đang trong quá trình gán dữ liệu tự động
             if (item == null || _isLoadingData) return;
 
-            // 1. Lưu các thông số cơ bản (bạn giữ nguyên các biến bạn đang có)
+            // 1. Lưu các thông số cơ bản
             item.SavedCx = this.Cx;
             item.SavedCy = this.Cy;
             item.SavedSpacingDense = this.SpacingDense;
@@ -1287,42 +1432,76 @@ namespace ColumnRebar.ViewModels
             item.SavedStirrupRebar = this.SelectedStirrupRebar;
             item.SavedTieRebar = this.SelectedTieRebar;
             item.SavedStirrupLayout = this.SelectedStirrupLayout;
+            item.SavedMainTieType = this.SelectedMainTieType;
 
             // ==========================================================
             // 2. LƯU TRẠNG THÁI ĐAI MÓC CỦA TỪNG CHẤM ĐỎ TẠI ĐÂY
             // ==========================================================
             if (item.SavedDotTies == null) item.SavedDotTies = new List<int>();
-            item.SavedDotTies.Clear(); // Xóa data cũ của tầng này
+            item.SavedDotTies.Clear();
             foreach (var dot in RebarDots)
             {
-                // Lưu lại giá trị đai móc (0 hoặc 1) của từng chấm
                 item.SavedDotTies.Add(dot.TieType);
             }
 
             // ==========================================================
-            // 3. LƯU TRẠNG THÁI ĐAI LỒNG KÍN (Dựa vào vị trí Index)
-            // ==========================================================
-            if (item.SavedCustomClosedTieIndices == null) item.SavedCustomClosedTieIndices = new List<Tuple<int, int>>();
+            if (item.SavedCustomClosedTieIndices == null) item.SavedCustomClosedTieIndices = new List<Tuple<int, int, int>>();
             item.SavedCustomClosedTieIndices.Clear();
 
-            if (_customClosedTies != null)
+            var rebarList = RebarDots.ToList();
+            HashSet<string> savedKeys = new HashSet<string>();
+
+            // Ưu tiên quét list hiển thị (có chứa ID đai ở Item3)
+            if (AdvancedClosedTies != null)
             {
-                foreach (var tie in _customClosedTies)
+                foreach (var tie in AdvancedClosedTies)
                 {
-                    int index1 = RebarDots.IndexOf(tie.Item1);
-                    int index2 = RebarDots.IndexOf(tie.Item2);
+                    int index1 = rebarList.IndexOf(tie.Item1);
+                    if (index1 < 0) index1 = rebarList.FindIndex(d => Math.Abs(d.X - tie.Item1.X) < 5 && Math.Abs(d.Y - tie.Item1.Y) < 5);
+
+                    int index2 = rebarList.IndexOf(tie.Item2);
+                    if (index2 < 0) index2 = rebarList.FindIndex(d => Math.Abs(d.X - tie.Item2.X) < 5 && Math.Abs(d.Y - tie.Item2.Y) < 5);
 
                     if (index1 >= 0 && index2 >= 0)
                     {
-                        item.SavedCustomClosedTieIndices.Add(new Tuple<int, int>(index1, index2));
+                        string key = $"{index1}_{index2}";
+                        if (!savedKeys.Contains(key))
+                        {
+                            // LƯU THÊM tie.Item3 LÀ ID CỦA LOẠI ĐAI BỔ SUNG
+                            item.SavedCustomClosedTieIndices.Add(new Tuple<int, int, int>(index1, index2, tie.Item3));
+                            savedKeys.Add(key);
+                        }
                     }
                 }
             }
 
-            item.IsDataLoaded = true;
+            // Dự phòng list _customClosedTies (vì list này ko có ID đai, nên ta mặc định gán số 1 - Đai chữ nhật)
+            if (_customClosedTies != null)
+            {
+                foreach (var tie in _customClosedTies)
+                {
+                    int index1 = rebarList.IndexOf(tie.Item1);
+                    if (index1 < 0) index1 = rebarList.FindIndex(d => Math.Abs(d.X - tie.Item1.X) < 5 && Math.Abs(d.Y - tie.Item1.Y) < 5);
+
+                    int index2 = rebarList.IndexOf(tie.Item2);
+                    if (index2 < 0) index2 = rebarList.FindIndex(d => Math.Abs(d.X - tie.Item2.X) < 5 && Math.Abs(d.Y - tie.Item2.Y) < 5);
+
+                    if (index1 >= 0 && index2 >= 0)
+                    {
+                        string key1 = $"{index1}_{index2}";
+                        string key2 = $"{index2}_{index1}";
+
+                        if (!savedKeys.Contains(key1) && !savedKeys.Contains(key2))
+                        {
+                            // Gán mặc định loại 1 vì list cũ ko lưu kiểu
+                            item.SavedCustomClosedTieIndices.Add(new Tuple<int, int, int>(index1, index2, 1));
+                            savedKeys.Add(key1);
+                        }
+                    }
+                }
+            }
         }
 
-        // === HÀM TẢI DỮ LIỆU TỪ TẦNG MỚI LÊN GIAO DIỆN ===
         private void LoadDataForSelectedColumn(ColumnPreviewItem item)
         {
             if (item == null) return;
@@ -1333,12 +1512,11 @@ namespace ColumnRebar.ViewModels
             // 2. XỬ LÝ DỮ LIỆU NGUỒN
             if (!item.IsDataLoaded)
             {
-                // Nếu click lần đầu tiên -> Quét Revit. 
                 ExtractExistingRebarFromRevit(item);
                 item.IsDataLoaded = true;
             }
 
-            // 3. ĐỔ DỮ LIỆU TỪ ITEM RA GIAO DIỆN 
+            // 3. ĐỔ DỮ LIỆU TỪ ITEM RA GIAO DIỆN (Đã dọn dẹp các dòng lặp thừa)
             this.Cx = item.SavedCx > 0 ? item.SavedCx : 2;
             this.Cy = item.SavedCy > 0 ? item.SavedCy : 2;
             this.SpacingDense = !string.IsNullOrEmpty(item.SavedSpacingDense) ? item.SavedSpacingDense : "100";
@@ -1349,21 +1527,39 @@ namespace ColumnRebar.ViewModels
             if (item.SavedTieRebar != null) this.SelectedTieRebar = item.SavedTieRebar;
             if (item.SavedStirrupLayout != null) this.SelectedStirrupLayout = item.SavedStirrupLayout;
 
-            // --- PHỤC HỒI HÌNH VẼ ---
+            // (Khôi phục Đai chính - Nhớ dòng này từ lần fix trước nhé)
+            if (item.SavedMainTieType != null) this.SelectedMainTieType = item.SavedMainTieType;
+
+            // ===================================================================================
+            // 4. BƯỚC QUYẾT ĐỊNH: TÍNH TOÁN LẠI LƯỚI THÉP (SỐ CHẤM ĐỎ) TRƯỚC TIÊN!
+            // Phải tạo xong khung thép của tầng này rồi mới có chỗ mà gắn đai vào.
+            // ===================================================================================
+            RecalculateRebarInfo();
             UpdateRebarDiagram();
 
+            // ===================================================================================
+            // 5. XÓA SẠCH "TÀN DƯ" ĐAI CỦA TẦNG CŨ (DIỆT TẬN GỐC BÓNG MA TRÊN CANVAS)
+            // ===================================================================================
+            if (_customClosedTies == null) _customClosedTies = new List<Tuple<RebarDot, RebarDot>>();
+            _customClosedTies.Clear();
+
+            if (AdvancedClosedTies == null) AdvancedClosedTies = new List<Tuple<RebarDot, RebarDot, int>>();
+            AdvancedClosedTies.Clear();
+
+            // ===================================================================================
+            // 6. PHỤC HỒI ĐAI TỪ DATA ĐÃ LƯU LÊN LƯỚI THÉP MỚI
+            // ===================================================================================
             // A. Phục hồi Đai móc (TieType cho từng chấm đỏ)
-            if (item.SavedDotTies != null)
+            if (item.SavedDotTies != null && RebarDots != null)
             {
                 for (int i = 0; i < RebarDots.Count && i < item.SavedDotTies.Count; i++)
                 {
-                    RebarDots[i].TieType = item.SavedDotTies[i]; // Giao diện tự động vẽ nhờ OnPropertyChanged
+                    RebarDots[i].TieType = item.SavedDotTies[i];
                 }
             }
 
-            // B. Phục hồi Đai lồng kín (Dựa vào Index đã lưu) -> BẠN ĐANG THIẾU ĐOẠN NÀY
-            _customClosedTies = new List<Tuple<RebarDot, RebarDot>>();
-            if (item.SavedCustomClosedTieIndices != null)
+            // B. Phục hồi Đai bổ sung khép kín (Đã nâng cấp)
+            if (item.SavedCustomClosedTieIndices != null && RebarDots != null)
             {
                 foreach (var indices in item.SavedCustomClosedTieIndices)
                 {
@@ -1371,14 +1567,22 @@ namespace ColumnRebar.ViewModels
                     {
                         var dot1 = RebarDots[indices.Item1];
                         var dot2 = RebarDots[indices.Item2];
+
                         _customClosedTies.Add(new Tuple<RebarDot, RebarDot>(dot1, dot2));
+
+                        // ĐỔI SỐ 1 THÀNH indices.Item3 ĐỂ NÓ VẼ ĐÚNG LOẠI ĐAI BẠN ĐÃ CHỌN
+                        AdvancedClosedTies.Add(new Tuple<RebarDot, RebarDot, int>(dot1, dot2, indices.Item3));
                     }
                 }
             }
 
+            // ===================================================================================
+            // 7. RA LỆNH VẼ LẠI GIAO DIỆN
+            // ===================================================================================
             RefreshInternalTies();
-            RecalculateRebarInfo();
             GenerateColumnPreview();
+            string savedLayoutName = item.SavedStirrupLayout?.Name ?? "";
+            UpdateStirrupGraphic(item, savedLayoutName);
             _isLoadingData = false;
         }
         // Hàm copy cấu hình qua lại cho những tầng bị bỏ qua (chưa click vào xem)
@@ -1392,6 +1596,7 @@ namespace ColumnRebar.ViewModels
             item.SavedStirrupRebar = this.SelectedStirrupRebar;
             item.SavedTieRebar = this.SelectedTieRebar;
             item.SavedStirrupLayout = this.SelectedStirrupLayout;
+            item.SavedMainTieType = this.SelectedMainTieType;
             item.IsDataLoaded = true;
         }
 
@@ -1401,18 +1606,21 @@ namespace ColumnRebar.ViewModels
             if (column == null || !column.IsValidObject) return;
             try
             {
-                RebarHostData rebarHostData = RebarHostData.GetRebarHostData(column);
-                if (rebarHostData == null) return;
+                // Dùng FilteredElementCollector quét toàn bộ thép trong dự án 
+                // và lọc ra đúng những thanh đang nhận Cột này làm vật chủ (Host)
+                var rebarsInColumn = new FilteredElementCollector(column.Document)
+                    .OfClass(typeof(Rebar))
+                    .Cast<Rebar>()
+                    .Where(r => r.GetHostId() == column.Id)
+                    .ToList();
 
-                var rebars = rebarHostData.GetRebarsInHost();
-                if (rebars != null && rebars.Count > 0)
+                if (rebarsInColumn.Any())
                 {
-                    // Ép sang ToList() để không bị lỗi CollectionModified khi xóa
-                    foreach (var r in rebars.ToList())
+                    foreach (var r in rebarsInColumn)
                     {
                         if (r != null && r.IsValidObject)
                         {
-                            _doc.Delete(r.Id);
+                            column.Document.Delete(r.Id);
                         }
                     }
                 }
